@@ -48,7 +48,7 @@ function SideBar() {
             Home
           </div>
         </Link>
-        <Link
+        {/* <Link
           className={`sidebar-item ${(location.pathname === '/favourites' ? 'active' : '')}`}
           to='/favourites'
         >
@@ -61,7 +61,7 @@ function SideBar() {
           <div className="text">
             Favourites
           </div>
-        </Link>
+        </Link> */}
         <div className="devider"></div>
         <div className="sidebar-item" onClick={toggleTheme}>
           {
