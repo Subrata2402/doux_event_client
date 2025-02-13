@@ -52,7 +52,7 @@ function Header(props) {
     const updatedMenuList = menuList.map((item, i) => {
       if (i === index) {
         item.isSelected = true;
-        props.setSortedType(item.text);
+        props.setFilteredType(item.text);
       } else {
         item.isSelected = false;
       }

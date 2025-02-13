@@ -11,13 +11,16 @@ import socket from '../../../services/socketService';
 
 function EventCard(props) {
   const { getEvents } = useEvent();
-  const { profileDetails } = useAuth();
+  const { profileDetails, isLoggedIn } = useAuth();
   const [event, setEvent] = useState(props.event);
   const apiConnection = new ApiConnection();
   const [cnfModalShow, setCnfModalShow] = useState(false);
   const [delModalShow, setDelModalShow] = useState(false);
 
   const joinEvent = async () => {
+    if (!isLoggedIn) {
+      return customSnackBar('Please login to join the event');
+    }
     try {
       const response = await apiServices.joinEvent(event._id);
       if (response.success) {

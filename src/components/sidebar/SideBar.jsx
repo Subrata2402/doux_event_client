@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import './SideBar.scss';
-import { FaRegStar } from "react-icons/fa";
-import { FaStar } from "react-icons/fa";
 import { PiSignInBold } from "react-icons/pi";
 import { GoHome } from "react-icons/go";
 import { GoHomeFill } from "react-icons/go";
@@ -12,6 +10,8 @@ import { IconButton, Tooltip } from '@mui/material';
 import { useAuth } from '../../store/AuthContext';
 import Confirmation from '../Confirmation';
 import customSnackBar from '../snackbar/CustomSnackBar';
+import { IoMdAddCircleOutline } from "react-icons/io";
+import { IoMdAddCircle } from "react-icons/io";
 
 function SideBar() {
   const location = useLocation();
@@ -48,20 +48,23 @@ function SideBar() {
             Home
           </div>
         </Link>
-        {/* <Link
-          className={`sidebar-item ${(location.pathname === '/favourites' ? 'active' : '')}`}
-          to='/favourites'
-        >
-          {
-            location.pathname === '/favourites'
-              ?
-              <FaStar color='var(--nav-item-color)' className='icon' />
-              : <FaRegStar color='var(--nav-item-color)' className='icon' />
-          }
-          <div className="text">
-            Favourites
-          </div>
-        </Link> */}
+        {
+          !profileDetails.isGuest &&
+          <Link
+            className={`sidebar-item ${(location.pathname === '/create-event' ? 'active' : '')}`}
+            to='/create-event'
+          >
+            {
+              location.pathname === '/create-event'
+                ?
+                <IoMdAddCircle color='var(--nav-item-color)' className='icon' />
+                : <IoMdAddCircleOutline color='var(--nav-item-color)' className='icon' />
+            }
+            <div className="text">
+              Create Event
+            </div>
+          </Link>
+        }
         <div className="devider"></div>
         <div className="sidebar-item" onClick={toggleTheme}>
           {

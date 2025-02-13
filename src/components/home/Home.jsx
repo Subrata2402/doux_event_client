@@ -7,14 +7,17 @@ import EventCard from '../event/event_card/EventCard';
 function Home() {
   const { events, getEvents } = useEvent();
   const [searchText, setSearchText] = useState('');
-  const [filteredEvents, setFilteredEvents] = useState([]);
+  const [filteredEvents, setFilteredEvents] = useState(events);
   const [filteredType, setFilteredType] = useState('Date');
 
   useEffect(() => {
-    let filtered = events.filter(event =>
-      event.name.toLowerCase().includes(searchText.toLowerCase().trim()) ||
-      event.description.toLowerCase().includes(searchText.toLowerCase().trim())
-    );
+    let filtered = events;
+    if (searchText.trim()) {
+      filtered = events.filter(event =>
+        event.name.toLowerCase().includes(searchText.toLowerCase().trim()) ||
+        event.description.toLowerCase().includes(searchText.toLowerCase().trim())
+      );
+    }
     setFilteredEvents(filtered);
   }, [searchText, events]);
 
@@ -22,7 +25,7 @@ function Home() {
     <div className="home-wrapper">
       <Header setSearchText={setSearchText} searchText={searchText} setFilteredType={setFilteredType} />
       {
-        filteredEvents?.length === 0
+        filteredEvents.length === 0
           ? <div className="no-events">There are no events found...</div>
           :
           <div className="cards-container">
