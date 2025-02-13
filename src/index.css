@@ -1,0 +1,90 @@
+:root {
+  --bg-color: rgb(255, 255, 255);
+  --border-color: rgb(233, 233, 233);
+  --border-color-a: rgba(0, 0, 0, 0.1);
+  --text-color: rgb(112, 112, 112);
+  --ai-dark: rgb(33, 33, 33);
+  --nav-item-color: rgb(109, 48, 171);
+  --nav-item-bg-color: rgb(245, 234, 255);
+  --nav-item-bg-hover-color: rgba(245, 234, 255, 0.9);
+  --nav-dp-color: rgba(109, 48, 171, 0.1);
+  --grey-240: rgb(240, 240, 240);
+  --grey-200: rgb(200, 200, 200);
+  --grey-100: rgb(140, 140, 140);
+  --red-color: rgb(255, 0, 0);
+  --button-color: rgb(112, 112, 112);
+  --button-text-color: rgb(255, 255, 255);
+}
+
+[data-theme="dark"] {
+  --bg-color: rgb(33, 33, 33);
+  --border-color: rgb(60, 60, 60);
+  --border-color-a: rgba(255, 255, 255, 0.1);
+  --text-color: rgb(200, 200, 200);
+  --ai-dark: rgb(255, 255, 255);
+  --nav-item-color: rgb(200, 200, 200);
+  --nav-item-bg-color: rgb(60, 60, 60);
+  --nav-item-bg-hover-color: rgba(60, 60, 60, 0.9);
+  --nav-dp-color: rgba(200, 200, 200, 0.1);
+  --grey-240: rgb(60, 60, 60);
+  --grey-200: rgb(100, 100, 100);
+  --grey-100: rgb(140, 140, 140);
+}
+
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.6rem;
+  padding: 1rem;
+  position: relative;
+  height: 100vh;
+  background-color: var(--bg-color) !important;
+  transition: background-color 0.5s;
+
+  #root {
+    height: 100%;
+  }
+}
+
+.layout {
+  display: flex;
+  gap: 1rem;
+  height: 100%;
+}
+
+.add-notes-button {
+  position: absolute !important;  
+  bottom: 2rem;
+  right: 2rem;
+}
+
+.visibility-hidden {
+  visibility: hidden;
+}
+
+.modal-content {
+  background-color: var(--bg-color) !important;
+  color: var(--text-color) !important;
+}
+
+a {
+  text-decoration: none !important;
+  color: var(--nav-item-color) !important;
+}
+
+@media screen and (max-width: 550px) {
+  body {
+    padding: 0.5rem;
+  }
+
+  .layout {
+    gap: 0.5rem;
+  }
+
+  html {
+    font-size: 14px;
+  }
+}

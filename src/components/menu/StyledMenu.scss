@@ -1,0 +1,15 @@
+.selected-item {
+  background-color: var(--grey-240) !important;
+}
+
+.css-x6cj71-MuiPaper-root-MuiPopover-paper-MuiMenu-paper {
+  background-color: var(--bg-color) !important;
+
+  &::before {
+    background-color: var(--bg-color) !important;
+  }
+
+  li {
+    color: var(--text-color) !important;
+  }
+}

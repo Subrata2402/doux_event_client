@@ -1,0 +1,85 @@
+.event-card {
+  border: 1px solid var(--border-color);
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 0 0.5rem 0.1rem var(--border-color);
+    background-color: var(--grey-240);
+  }
+
+  .card-image {
+    img {
+      border-radius: 1rem 1rem 0 0;
+      height: 15rem;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .date-time {
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--grey-100);
+    
+    span {
+      color: var(--grey-200);
+    }
+
+    .dot {
+      height: 0.25rem;
+      width: 0.2rem;
+      background-color: var(--grey-200);
+      margin: auto 0.3rem;
+      border-radius: 50%;
+    }
+  }
+
+  .card-title {
+    color: var(--text-color);
+    font-weight: 700;
+    font-size: 1.2rem;
+    padding: 0 1rem;
+  }
+
+  .card-body {
+    color: var(--grey-100);
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: justify;
+    padding: 0 1rem;
+  }
+
+  .description {
+    color: var(--grey-100);
+    font-size: 1rem;
+    font-weight: 500;
+    text-align: justify;
+    margin-bottom: 0.5rem;
+  }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding: 0 1rem 1rem 1rem;
+
+    .css-1uent87-MuiButtonBase-root-MuiButton-root {
+      padding: 0.3rem 1.5rem;
+      border: none;
+      border-radius: 0.5rem;
+      background-color: var(--button-color);
+      color: var(--button-text-color);
+      font-size: 1rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      text-transform: none;
+    }
+  }
+}

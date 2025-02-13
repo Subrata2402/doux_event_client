@@ -1,0 +1,170 @@
+.signin-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100%;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+
+  .signin-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 1px solid var(--border-color);
+    width: 30rem;
+    transition: box-shadow 0.2s, transform 0.2s;
+
+    &:hover {
+      box-shadow: 0 0 1rem 0.2rem var(--border-color);
+      transform: scale(1.01);
+    }
+
+    .signin-header {
+      margin: 0 auto;
+
+      h2 {
+        font-size: 2rem;
+        font-weight: 600;
+        font-family: 'Poppins', sans-serif;
+      }
+    }
+
+    .signin-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+
+      .group-input {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        .input-label {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+
+          label {
+            font-size: 1.5rem;
+            font-weight: 500;
+          }
+        }
+
+        .input-field {
+          display: flex;
+          align-items: center;
+          border: 1px solid var(--border-color);
+          padding: 0.2rem 1rem;
+          border-radius: 0.5rem;
+
+          button {
+            color: var(--nav-item-color);
+          }
+
+          input {
+            outline: none;
+            border: none;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            background-color: transparent;
+            color: var(--text-color);
+            width: 100%;
+            letter-spacing: 0.08rem;
+          }
+        }
+      }
+
+      .rf-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.5rem;
+
+        .css-imrjgg-MuiButtonBase-root-MuiCheckbox-root {
+          color: var(--text-color);
+        }
+
+        .css-1uent87-MuiButtonBase-root-MuiButton-root {
+          color: var(--text-color);
+          font-family: 'Poppins', sans-serif;
+          text-transform: none;
+          font-size: 1rem;
+          padding: 0.2rem 1rem;
+          border-radius: 2rem;
+        }
+      }
+
+      .css-74d805-MuiButtonBase-root-MuiButton-root {
+        color: var(--text-color);
+        font-family: 'Poppins', sans-serif;
+        text-transform: none;
+        font-size: 1.5rem;
+        padding: 0.5rem 1rem;
+        border-radius: 2rem;
+        background-color: var(--grey-240);
+        transition: background-color 0.2s;
+        box-shadow: none;
+        font-weight: bold;
+      }
+
+      .or-divider {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        .divider {
+          flex: 1;
+          height: 1px;
+          background-color: var(--border-color);
+          margin: 0 0.5rem;
+        }
+      }
+
+      .signup-link {
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+        font-size: 1rem;
+        color: var(--text-color);
+
+        a {
+          color: var(--text-color);
+          font-weight: 600;
+          text-decoration: none;
+          transition: text-decoration 0.2s;
+
+          &:hover {
+            text-decoration: underline var(--text-color) !important;
+          }
+        }
+      }
+    }
+  }
+
+  .home-back {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    p {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text-color);
+      margin: 0;
+    }
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .signin-wrapper {
+    padding: 1rem;
+
+    .signin-container {
+      width: 25rem;
+    }
+  }
+}
