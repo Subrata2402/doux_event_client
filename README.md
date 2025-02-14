@@ -5,6 +5,8 @@ Doux Event is a web application that allows users to create and manage events. U
 - React
 - Bootstrap
 - Material UI
+- Axios
+- Socket.io
 
 ### Features
 - Normal user can view events
@@ -12,6 +14,7 @@ Doux Event is a web application that allows users to create and manage events. U
 - Registered user can create, view, delete and join events
 - User can search events by name or description
 - User can filter events by date and category
+- Real-time updates for events
 
 ### Installation
 1. Clone the repository
