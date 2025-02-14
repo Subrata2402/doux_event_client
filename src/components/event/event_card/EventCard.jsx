@@ -120,7 +120,7 @@ function EventCard(props) {
               />
             </>
             : <Tooltip title='Join the event' placement='top'>
-              <Button onClick={joinEvent} disabled={loadingj}>
+              <Button onClick={joinEvent} disabled={loadingj} style={{ backgroundColor: 'var(--primary-bt-color)'}}>
                 {loadingj ? <Spinner animation="border" size='sm' className='me-2' /> : ''} Join
               </Button>
             </Tooltip>

@@ -1,19 +1,22 @@
 :root {
   --bg-color: rgb(255, 255, 255);
-  --border-color: rgb(233, 233, 233);
+  --border-color: rgb(230, 229, 229);
   --border-color-a: rgba(0, 0, 0, 0.1);
   --text-color: rgb(112, 112, 112);
   --ai-dark: rgb(33, 33, 33);
   --nav-item-color: rgb(109, 48, 171);
+  --primary-bt-color: rgb(164, 113, 215);
+  /* --nav-item-color: rgb(109, 48, 171); */
   --nav-item-bg-color: rgb(245, 234, 255);
   --nav-item-bg-hover-color: rgba(245, 234, 255, 0.9);
   --nav-dp-color: rgba(109, 48, 171, 0.1);
   --grey-240: rgb(240, 240, 240);
   --grey-200: rgb(200, 200, 200);
   --grey-100: rgb(140, 140, 140);
-  --red-color: rgb(255, 0, 0);
+  --red-color: rgb(239, 118, 118);
   --button-color: rgb(112, 112, 112);
   --button-text-color: rgb(255, 255, 255);
+  --del-btn-color: #493D9E;
 }
 
 [data-theme="dark"] {

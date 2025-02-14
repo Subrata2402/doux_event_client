@@ -27,7 +27,7 @@ function Confirmation(props) {
         </div>
         <hr />
         <div className="d-flex justify-content-end gap-3">
-          <Button variant="contained" color='error' onClick={handleClose}>Cancel</Button>
+          <Button variant="contained" style={{backgroundColor: "var(--button-color)"}} onClick={handleClose}>Cancel</Button>
           <Button variant="contained" onClick={handleConfirm}>
             Confirm
           </Button>
