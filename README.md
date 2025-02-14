@@ -1,8 +1,20 @@
-# React + Vite
+## Doux Event
+Doux Event is a web application that allows users to create and manage events. Users can create events, view events, and delete events. Users can also view events that other users have created. Here user can login as a guest user or as a registered user. Guest user can only view or join the events and registered user can create, view, delete and join others events.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Technologies Used
+- React
+- Bootstrap
+- Material UI
 
-Currently, two official plugins are available:
+### Features
+- Normal user can view events
+- Guest user can view and join events
+- Registered user can create, view, delete and join events
+- User can search events by name or description
+- User can filter events by date and category
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Installation
+1. Clone the repository
+2. Run `npm install` to install dependencies
+3. Run `npm run dev` to start the application
+4. Open `http://localhost:5173` in your browser
