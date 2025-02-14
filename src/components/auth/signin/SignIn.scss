@@ -98,17 +98,25 @@
         }
       }
 
-      .css-74d805-MuiButtonBase-root-MuiButton-root {
-        color: var(--text-color);
-        font-family: 'Poppins', sans-serif;
-        text-transform: none;
-        font-size: 1.5rem;
-        padding: 0.5rem 1rem;
-        border-radius: 2rem;
-        background-color: var(--grey-240);
-        transition: background-color 0.2s;
-        box-shadow: none;
-        font-weight: bold;
+      .buttons {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        Button {
+          color: var(--text-color);
+          font-family: 'Poppins', sans-serif;
+          text-transform: none;
+          font-size: 1.5rem;
+          padding: 0.5rem 1rem;
+          border-radius: 2rem;
+          background-color: var(--grey-240);
+          transition: background-color 0.2s;
+          box-shadow: none;
+          font-weight: bold;
+          width: 100%;
+        }
       }
 
       .or-divider {

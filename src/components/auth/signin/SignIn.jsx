@@ -124,27 +124,29 @@ function SignIn() {
               </Button>
             </Link>
           </div> */}
-          <Button
-            variant='contained'
-            className='submit-button'
-            disabled={loadingl || loadingg}
-            onClick={() => handleSubmit(false)}
-          >
-            {loadingl ? <Spinner animation="border" size='sm' className='me-2' /> : ''}Login
-          </Button>
-          <div className="or-divider">
-            <div className="divider"></div>
-            <div className="or-text">OR</div>
-            <div className="divider"></div>
+          <div className="buttons">
+            <Button
+              variant='contained'
+              className='submit-button'
+              disabled={loadingl || loadingg}
+              onClick={() => handleSubmit(false)}
+            >
+              {loadingl ? <Spinner animation="border" size='sm' className='me-2' /> : ''}Login
+            </Button>
+            <div className="or-divider">
+              <div className="divider"></div>
+              <div className="or-text">OR</div>
+              <div className="divider"></div>
+            </div>
+            <Button
+              variant='contained'
+              className='submit-button'
+              disabled={loadingl || loadingg}
+              onClick={() => handleSubmit(true)}
+            >
+              {loadingg ? <Spinner animation="border" size='sm' className='me-2' /> : ''}Guest Login
+            </Button>
           </div>
-          <Button
-            variant='contained'
-            className='submit-button'
-            disabled={loadingl || loadingg}
-            onClick={() => handleSubmit(true)}
-          >
-            {loadingg ? <Spinner animation="border" size='sm' className='me-2' /> : ''}Guest Login
-          </Button>
           <div className="signup-link">
             Don't have an account? <Link to='/auth/signup'>Sign Up</Link>
           </div>

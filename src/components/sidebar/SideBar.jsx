@@ -12,6 +12,7 @@ import Confirmation from '../Confirmation';
 import customSnackBar from '../snackbar/CustomSnackBar';
 import { IoMdAddCircleOutline } from "react-icons/io";
 import { IoMdAddCircle } from "react-icons/io";
+import StyledMenu from '../menu/StyledMenu';
 
 function SideBar() {
   const location = useLocation();
@@ -20,11 +21,27 @@ function SideBar() {
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
 
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const [menuList, setMenuList] = useState([
+    { text: 'Logout', icon: <MdLogout color='var(--text-color)' size={20} /> }
+  ]);
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     setIsLoggedIn(false);
     navigate('/auth/signin');
     customSnackBar('Logged out successfully');
+    handleClose();
   };
 
   return (
@@ -80,7 +97,17 @@ function SideBar() {
         {
           isLoggedIn ?
             <>
-              <div className="profile-avatar">{profileDetails.name[0]}</div>
+              <div className="profile-avatar" onClick={handleClick}>{profileDetails.name[0]}</div>
+              <StyledMenu
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                onClick={handleClose}
+                id="sort-menu"
+                menuList={menuList}
+                onMenuItemClick={handleLogout}
+                width="15rem"
+              />
               <div className="profile-name">{profileDetails.name}</div>
               <div className="arrow-icon">
                 <Tooltip title='Logout' placement='top'>

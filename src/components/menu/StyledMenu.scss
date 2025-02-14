@@ -2,8 +2,11 @@
   background-color: var(--grey-240) !important;
 }
 
-.css-x6cj71-MuiPaper-root-MuiPopover-paper-MuiMenu-paper {
+
+.MuiPaper-root.MuiPopover-paper.MuiMenu-paper {
   background-color: var(--bg-color) !important;
+  max-height: 20rem !important;
+  overflow: auto !important;
 
   &::before {
     background-color: var(--bg-color) !important;

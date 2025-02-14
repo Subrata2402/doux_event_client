@@ -24,6 +24,9 @@ function EventCard(props) {
     if (!isLoggedIn) {
       return customSnackBar('Please login to join the event');
     }
+    if (profileDetails?._id === props.event?.organizer) {
+      return customSnackBar('You can\'t join your own event');
+    }
     setLoadingj(true);
     try {
       const response = await apiServices.joinEvent(props.event._id);

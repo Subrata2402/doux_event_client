@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { BiSearchAlt } from "react-icons/bi";
 import { MdClear } from "react-icons/md";
 import './Header.scss';
@@ -9,6 +9,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import Box from '@mui/material/Box';
+import { BiCategory } from "react-icons/bi";
 
 function Header(props) {
   const [cleared, setCleared] = React.useState(false);
@@ -21,7 +22,7 @@ function Header(props) {
 
       return () => clearTimeout(timeout);
     }
-    return () => {};
+    return () => { };
   }, [cleared]);
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -95,6 +96,7 @@ function Header(props) {
               display: 'flex',
               justifyContent: 'center',
               position: 'relative',
+
             }}
           >
             <DemoItem>
@@ -103,6 +105,16 @@ function Header(props) {
                 onChange={(newValue) => props.setDate(newValue)}
                 sx={{ width: 260 }}
                 slotProps={{
+                  layout: {
+                    sx: {
+                      color: 'var(--text-color)',
+                      borderRadius: '2px',
+                      borderWidth: '1px',
+                      borderColor: 'var(--bg-color)',
+                      border: '1px solid',
+                      backgroundColor: 'var(--bg-color)',
+                    }
+                  },
                   field: { clearable: true, onClear: () => setCleared(true) },
                 }}
               />
@@ -110,6 +122,14 @@ function Header(props) {
           </Box>
         </LocalizationProvider>
         <input type="text" className='category-picker' onClick={handleClick} readOnly value={props.category === 'None' ? 'Select Category' : props.category} />
+        <IconButton
+          aria-label="delete"
+          size="small"
+          onClick={handleClick}
+          className='category-icon-button'
+        >
+          <BiCategory className='category-icon' size={25} />
+        </IconButton>
         <StyledMenu
           anchorEl={anchorEl}
           open={open}

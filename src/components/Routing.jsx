@@ -4,7 +4,6 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 const Loader = lazy(() => import('./loader/Loader'));
 const Layout = lazy(() => import('./Layout'));
 const Home = lazy(() => import('./home/Home'));
-const Favourites = lazy(() => import('./favourites/Favourites'));
 const SignIn = lazy(() => import('./auth/signin/SignIn'));
 const SignUp = lazy(() => import('./auth/signup/SignUp'));
 const ForgotPassword = lazy(() => import('./auth/forgot_password/ForgotPassword'));
@@ -37,15 +36,6 @@ const router = createBrowserRouter([
           </Suspense>
         ),
         children: [
-
-          {
-            path: '/favourites',
-            element: (
-              <Suspense fallback={<Loader />}>
-                <Favourites />
-              </Suspense>
-            )
-          },
           {
             path: '/create-event',
             element: (
