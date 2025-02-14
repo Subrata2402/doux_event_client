@@ -1,16 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BiSearchAlt } from "react-icons/bi";
 import { MdClear } from "react-icons/md";
 import './Header.scss';
-import { Button, IconButton } from '@mui/material';
+import { IconButton } from '@mui/material';
 import StyledMenu from '../menu/StyledMenu';
-import { IoMdResize } from "react-icons/io";
-import { FaRegStar, FaStar } from "react-icons/fa";
-import { RiFilterOffLine, RiFilterOffFill } from "react-icons/ri";
-import { MdAccessTime, MdAccessTimeFilled } from "react-icons/md";
+import { DemoItem } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import Box from '@mui/material/Box';
 
 function Header(props) {
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [cleared, setCleared] = React.useState(false);
+
+  React.useEffect(() => {
+    if (cleared) {
+      const timeout = setTimeout(() => {
+        setCleared(false);
+      }, 1500);
+
+      return () => clearTimeout(timeout);
+    }
+    return () => {};
+  }, [cleared]);
+
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
   const handleClick = (event) => {
@@ -22,37 +36,26 @@ function Header(props) {
   };
 
   const [menuList, setMenuList] = useState([
-    {
-      filledIcon: <RiFilterOffFill color='var(--nav-item-color)' />,
-      outlineIcon: <RiFilterOffLine color='var(--nav-item-color)' />,
-      text: 'None',
-      isSelected: true
-    },
-    {
-      filledIcon: <MdAccessTimeFilled color='var(--nav-item-color)' />,
-      outlineIcon: <MdAccessTime color='var(--nav-item-color)' />,
-      text: 'Date',
-      isSelected: false
-    },
-    {
-      filledIcon: <IoMdResize color='var(--nav-item-color)' />,
-      outlineIcon: <IoMdResize color='var(--nav-item-color)' />,
-      text: 'Size',
-      isSelected: false
-    },
-    {
-      filledIcon: <FaStar color='var(--nav-item-color)' />,
-      outlineIcon: <FaRegStar color='var(--nav-item-color)' />,
-      text: 'Favourite',
-      isSelected: false
-    }
+    { text: 'None', isSelected: true },
+    { text: 'Technology', isSelected: false },
+    { text: 'Music', isSelected: false },
+    { text: 'Travel', isSelected: false },
+    { text: 'Food', isSelected: false },
+    { text: 'Health', isSelected: false },
+    { text: 'Sports', isSelected: false },
+    { text: 'Fashion', isSelected: false },
+    { text: 'Education', isSelected: false },
+    { text: 'Business', isSelected: false },
+    { text: 'Art', isSelected: false },
+    { text: 'Science', isSelected: false },
+    { text: 'Other', isSelected: false },
   ]);
 
   const onMenuItemClick = (index) => {
     const updatedMenuList = menuList.map((item, i) => {
       if (i === index) {
         item.isSelected = true;
-        props.setFilteredType(item.text);
+        props.setCategory(item.text);
       } else {
         item.isSelected = false;
       }
@@ -63,7 +66,7 @@ function Header(props) {
   }
 
   return (
-    <div className="d-flex align-items-center gap-2 w-100">
+    <div className="events-header">
       <div className="search-bar">
         <BiSearchAlt className='search-icon' />
         <input
@@ -83,20 +86,42 @@ function Header(props) {
           </IconButton>
         }
       </div>
-      <Button className="sort-note" onClick={handleClick}>
-        <img src="filter.svg" alt="filter" />
-        <span>Sort</span>
-      </Button>
-      <StyledMenu
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        onClick={handleClose}
-        id="sort-menu"
-        menuList={menuList}
-        onMenuItemClick={onMenuItemClick}
-        width="200px"
-      />
+      <div className="filter-options">
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <Box
+            sx={{
+              width: '100%',
+              height: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              position: 'relative',
+            }}
+          >
+            <DemoItem>
+              <DesktopDatePicker
+                value={props.date}
+                onChange={(newValue) => props.setDate(newValue)}
+                sx={{ width: 260 }}
+                slotProps={{
+                  field: { clearable: true, onClear: () => setCleared(true) },
+                }}
+              />
+            </DemoItem>
+          </Box>
+        </LocalizationProvider>
+        <input type="text" className='category-picker' onClick={handleClick} readOnly value={props.category === 'None' ? 'Select Category' : props.category} />
+        <StyledMenu
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          onClick={handleClose}
+          id="sort-menu"
+          menuList={menuList}
+          onMenuItemClick={onMenuItemClick}
+          width="15rem"
+        />
+      </div>
+
     </div>
   )
 }

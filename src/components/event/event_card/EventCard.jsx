@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import './EventCard.scss';
 import { useEvent } from '../../../store/EventContext';
 import customSnackBar from '../../snackbar/CustomSnackBar';
@@ -8,49 +8,55 @@ import { useAuth } from '../../../store/AuthContext';
 import apiServices from '../../../services/apiServices';
 import Confirmation from '../../Confirmation';
 import socket from '../../../services/socketService';
+import Spinner from 'react-bootstrap/Spinner';
 
 function EventCard(props) {
   const { getEvents } = useEvent();
   const { profileDetails, isLoggedIn } = useAuth();
-  const [event, setEvent] = useState(props.event);
   const apiConnection = new ApiConnection();
   const [cnfModalShow, setCnfModalShow] = useState(false);
   const [delModalShow, setDelModalShow] = useState(false);
+  const [loadingj, setLoadingj] = useState(false);
+  const [loadingl, setLoadingl] = useState(false);
+  const [loadingd, setLoadingd] = useState(false);
 
   const joinEvent = async () => {
     if (!isLoggedIn) {
       return customSnackBar('Please login to join the event');
     }
+    setLoadingj(true);
     try {
-      const response = await apiServices.joinEvent(event._id);
+      const response = await apiServices.joinEvent(props.event._id);
       if (response.success) {
         getEvents();
-        setEvent(response.data);
         socket.emit('update-event', response.data);
       }
       customSnackBar(response.message);
     } catch (error) {
       customSnackBar(error.message);
     }
+    setLoadingj(false);
   }
 
   const leaveEvent = async () => {
+    setLoadingl(true);
     try {
-      const response = await apiServices.leaveEvent(event._id);
+      const response = await apiServices.leaveEvent(props.event._id);
       if (response.success) {
         getEvents();
-        setEvent(response.data);
         socket.emit('update-event', response.data);
       }
       customSnackBar(response.message);
     } catch (error) {
       customSnackBar(error.message);
     }
+    setLoadingl(false);
   }
 
   const deleteEvent = async () => {
+    setLoadingd(true);
     try {
-      const response = await apiServices.deleteEvent(event._id);
+      const response = await apiServices.deleteEvent(props.event._id);
       if (response.success) {
         getEvents();
         socket.emit('update-event', response.data);
@@ -59,59 +65,47 @@ function EventCard(props) {
     } catch (error) {
       customSnackBar(error.message);
     }
+    setLoadingd(false);
   }
-
-  useEffect(() => {
-    // Listen for events
-    socket.on('update-event', (data) => {
-      if (data._id === event._id) {
-        setEvent(data);
-      }
-    });
-    // Cleanup on component unmount
-    return () => {
-      socket.off('update-event');
-    };
-  }, []);
 
   return (
     <div className="event-card">
       <div className="card-image">
-        <img src={`${apiConnection.baseUrl}/images/${event?.image}`} alt="event" className='img-fluid' />
+        <img src={`${apiConnection.baseUrl}/images/${props.event?.image}`} alt="event" className='img-fluid' />
       </div>
       <div className="card-title">
-        {event?.name}
+        {props.event?.name}
       </div>
       <div className="card-body">
         <div className="description">
-          {event?.description}
+          {props.event?.description}
         </div>
         <div className="location">
-          <strong>Location: </strong>{event?.location}
+          <strong>Location: </strong>{props.event?.location}
         </div>
         <div className="date-time">
           <strong>Date:</strong>
           <span>
-            {new Date(event?.date).toDateString().slice(4)}
+            {new Date(props.event?.date).toDateString().slice(4)}
           </span>
           <div className='dot'></div>
           <span>
-            {event?.time}
+            {props.event?.time}
           </span>
         </div>
         <div className="attendees">
           <span>
-            <strong>Attendees: </strong>{event?.attendees?.length}
+            <strong>Attendees: </strong>{props.event?.attendees?.length}
           </span>
         </div>
       </div>
       <div className="card-footer">
         {
-          event?.attendees?.includes(profileDetails?._id) ?
+          props.event?.attendees?.includes(profileDetails?._id) ?
             <>
               <Tooltip title='Leave the event' placement='top'>
-                <Button onClick={() => setCnfModalShow(true)}>
-                  Leave
+                <Button onClick={() => setCnfModalShow(true)} disabled={loadingl}>
+                  {loadingl ? <Spinner animation="border" size='sm' className='me-2' /> : ''} Leave
                 </Button>
               </Tooltip>
               <Confirmation
@@ -123,17 +117,17 @@ function EventCard(props) {
               />
             </>
             : <Tooltip title='Join the event' placement='top'>
-              <Button onClick={joinEvent}>
-                Join
+              <Button onClick={joinEvent} disabled={loadingj}>
+                {loadingj ? <Spinner animation="border" size='sm' className='me-2' /> : ''} Join
               </Button>
             </Tooltip>
         }
         {
-          profileDetails?._id === event?.organizer &&
+          profileDetails?._id === props.event?.organizer &&
           <>
             <Tooltip title='Delete the event' placement='top'>
-              <Button className='bg-danger' onClick={() => setDelModalShow(true)}>
-                Delete
+              <Button className='bg-danger' onClick={() => setDelModalShow(true)} disabled={loadingd}>
+                {loadingd ? <Spinner animation="border" size='sm' className='me-2' /> : ''} Delete
               </Button>
             </Tooltip>
             <Confirmation

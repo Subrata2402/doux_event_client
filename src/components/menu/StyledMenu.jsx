@@ -50,10 +50,10 @@ function StyledMenu(props) {
           className={`d-flex align-items-center justify-content-between ${item.isSelected ? 'selected-item' : ''}`}
           style={{ minWidth: props.width || '100px' }}
         >
-          <div className="d-flex align-items-center gap-4">
-            {item.isSelected ? item.filledIcon : item.outlineIcon || item.icon}
+          {/* <div className="d-flex align-items-center gap-4"> */}
+            {/* {item.isSelected ? item.filledIcon : item.outlineIcon || item.icon} */}
             {item.text}
-          </div>
+          {/* </div> */}
           {item.isSelected && <FaCheck />}
         </MenuItem>
       ))}

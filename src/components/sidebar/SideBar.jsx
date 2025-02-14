@@ -48,23 +48,22 @@ function SideBar() {
             Home
           </div>
         </Link>
-        {
-          !profileDetails.isGuest &&
-          <Link
-            className={`sidebar-item ${(location.pathname === '/create-event' ? 'active' : '')}`}
-            to='/create-event'
-          >
-            {
-              location.pathname === '/create-event'
-                ?
-                <IoMdAddCircle color='var(--nav-item-color)' className='icon' />
-                : <IoMdAddCircleOutline color='var(--nav-item-color)' className='icon' />
-            }
-            <div className="text">
-              Create Event
-            </div>
-          </Link>
-        }
+        <Link
+          className={`sidebar-item ${(location.pathname === '/create-event' ? 'active' : '')}`}
+          to='/create-event'
+          onClick={() => profileDetails.isGuest && customSnackBar('Guest users are not allowed to create events')}
+        >
+          {
+            location.pathname === '/create-event'
+              ?
+              <IoMdAddCircle color='var(--nav-item-color)' className='icon' />
+              : <IoMdAddCircleOutline color='var(--nav-item-color)' className='icon' />
+          }
+          <div className="text">
+            Create Event
+          </div>
+        </Link>
+
         <div className="devider"></div>
         <div className="sidebar-item" onClick={toggleTheme}>
           {

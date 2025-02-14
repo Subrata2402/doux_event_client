@@ -43,6 +43,7 @@ body {
   height: 100vh;
   background-color: var(--bg-color) !important;
   transition: background-color 0.5s;
+  color: var(--text-color) !important;
 
   #root {
     height: 100%;

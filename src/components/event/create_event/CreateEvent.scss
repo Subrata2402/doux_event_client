@@ -13,11 +13,7 @@
     margin: 0 auto;
 
     .header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
       margin-bottom: 1rem;
-      border: 1px solid var(--border-color);
       border-radius: 1rem;
       padding: 0.5rem 1rem;
 
@@ -56,6 +52,17 @@
 
     input,
     textarea {
+      padding: 0.5rem;
+      font-size: 1.2rem;
+      font-weight: 500;
+      border: 1px solid var(--border-color);
+      border-radius: 0.5rem;
+      color: var(--text-color);
+      outline: none;
+      background-color: transparent;
+    }
+
+    select {
       padding: 0.5rem;
       font-size: 1.2rem;
       font-weight: 500;

@@ -7,6 +7,7 @@ import apiServices from '../../../services/apiServices';
 import customSnackBar from '../../snackbar/CustomSnackBar';
 import { useEvent } from '../../../store/EventContext';
 import socket from '../../../services/socketService';
+import Spinner from 'react-bootstrap/esm/Spinner';
 
 function CreateEvent() {
   const { getEvents } = useEvent();
@@ -17,9 +18,13 @@ function CreateEvent() {
     date: '',
     time: '',
     location: '',
+    category: '',
     description: '',
     'event-image': ''
   });
+  const [loading, setLoading] = useState(false);
+
+  const categories = ['Music', 'Sports', 'Food', 'Travel', 'Education', 'Business', 'Health', 'Fashion', 'Technology', 'Art', 'Science', 'Other'];
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -32,6 +37,7 @@ function CreateEvent() {
   };
 
   const createEvent = async () => {
+    setLoading(true);
     try {
       const formData = new FormData();
       for (let key in eventData) {
@@ -47,6 +53,7 @@ function CreateEvent() {
     } catch (error) {
       customSnackBar(error.message);
     }
+    setLoading(false);
   }
 
   return (
@@ -54,7 +61,7 @@ function CreateEvent() {
       <div className='event-container'>
         <div className="header">
           <h2 className="form-title m-0">Create Event</h2>
-          <div className="back-button">
+          {/* <div className="back-button">
             <Tooltip title='Back' placement='left'>
               <Link to='/'>
                 <IconButton>
@@ -62,12 +69,12 @@ function CreateEvent() {
                 </IconButton>
               </Link>
             </Tooltip>
-          </div>
+          </div> */}
         </div>
         <div className="event-form">
           <div className="row m-0 p-0">
             <div className="row m-0 p-0 mb-3 align-items-center">
-              <label htmlFor="event-name" className='col-sm-4'>Event Name <span>*</span></label>
+              <label htmlFor="event-name" className='col-sm-4'> Name <span>*</span></label>
               <input
                 type="text"
                 name='event-name'
@@ -78,7 +85,7 @@ function CreateEvent() {
               />
             </div>
             <div className="row m-0 p-0 mb-3 align-items-center">
-              <label htmlFor="event-date" className='col-sm-4'>Event Date <span>*</span></label>
+              <label htmlFor="event-date" className='col-sm-4'> Date <span>*</span></label>
               <input
                 type="date"
                 name='event-date'
@@ -89,7 +96,7 @@ function CreateEvent() {
               />
             </div>
             <div className="row m-0 p-0 mb-3 align-items-center">
-              <label htmlFor="event-time" className='col-sm-4'>Event Time <span>*</span></label>
+              <label htmlFor="event-time" className='col-sm-4'> Time <span>*</span></label>
               <input
                 type="time"
                 name='event-time'
@@ -100,7 +107,7 @@ function CreateEvent() {
               />
             </div>
             <div className="row m-0 p-0 mb-3 align-items-center">
-              <label htmlFor="event-location" className='col-sm-4'>Event Location <span>*</span></label>
+              <label htmlFor="event-location" className='col-sm-4'> Location <span>*</span></label>
               <input
                 type="text"
                 name='event-location'
@@ -110,8 +117,25 @@ function CreateEvent() {
                 value={eventData.location}
               />
             </div>
+            <div className="row m-0 p-0 mb-3 align-items-center">
+              <label htmlFor="event-location" className='col-sm-4'> Category <span>*</span></label>
+              <select
+                name="event-category"
+                id="event-category"
+                className='col-sm-8'
+                onChange={(e) => setEventData({ ...eventData, category: e.target.value })}
+                value={eventData.category}
+              >
+                <option value="">Select Category</option>
+                {
+                  categories.map((category, index) => (
+                    <option key={index} value={category}>{category}</option>
+                  ))
+                }
+              </select>
+            </div>
             <div className="row m-0 p-0 mb-3 align-items-start">
-              <label htmlFor="event-description" className='col-sm-4'>Event Description <span>*</span></label>
+              <label htmlFor="event-description" className='col-sm-4'> Description <span>*</span></label>
               <textarea
                 name="event-description"
                 id="event-description"
@@ -124,7 +148,7 @@ function CreateEvent() {
               </textarea>
             </div>
             <div className="row m-0 p-0 mb-3 align-items-center">
-              <label htmlFor="event-image" className='col-sm-4'>Event Image <span>*</span></label>
+              <label htmlFor="event-image" className='col-sm-4'> Image <span>*</span></label>
               <div className="file-upload col-sm-8">
                 <label htmlFor="event-image" className="file-upload-button">Choose File</label>
                 <input
@@ -142,9 +166,10 @@ function CreateEvent() {
                 variant='contained'
                 color='primary'
                 className='w-100'
+                disabled={loading}
                 onClick={createEvent}
               >
-                Create Event
+                { loading ? <Spinner animation="border" size='md' className='me-2' /> : "" }Create Event
               </Button>
             </div>
           </div>

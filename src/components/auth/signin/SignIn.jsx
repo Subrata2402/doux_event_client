@@ -7,6 +7,7 @@ import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import apiServices from '../../../services/apiServices';
 import customSnackBar from '../../snackbar/CustomSnackBar';
 import { useAuth } from '../../../store/AuthContext';
+import Spinner from 'react-bootstrap/esm/Spinner';
 
 function SignIn() {
   const { storeToken, setProfileDetails } = useAuth();
@@ -16,7 +17,8 @@ function SignIn() {
   });
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-  // const [loading, setLoading] = useState(false);
+  const [loadingl, setLoadingl] = useState(false);
+  const [loadingg, setLoadingg] = useState(false);
   const passwordInput = useRef(null);
   const navigate = useNavigate();
   const { pathname } = useLocation();
@@ -25,8 +27,10 @@ function SignIn() {
     let response;
     try {
       if (isGuest) {
+        setLoadingg(true);
         response = await apiServices.guestLogin(credentials);
       } else {
+        setLoadingl(true);
         response = await apiServices.login(credentials);
       }
       if (response.success) {
@@ -45,6 +49,8 @@ function SignIn() {
     } catch (error) {
       customSnackBar(error.message);
     }
+    setLoadingl(false);
+    setLoadingg(false);
   };
 
   if (pathname === '/auth/signin/forgot-password') {
@@ -73,7 +79,7 @@ function SignIn() {
                 onChange={(e) => setCredentials({ ...credentials, email: e.target.value })}
               />
               <IconButton>
-                <MdOutlineEmail size={'1.5rem'} />
+                <MdOutlineEmail size={'1.5rem'} color='var(--text-color)' />
               </IconButton>
             </div>
           </div>
@@ -95,13 +101,13 @@ function SignIn() {
               <IconButton onClick={() => setShowPassword(!showPassword)}>
                 {
                   showPassword ?
-                    <FaRegEyeSlash size={'1.5rem'} />
-                    : <FaRegEye size={'1.5rem'} />
+                    <FaRegEyeSlash size={'1.5rem'} color='var(--text-color)' />
+                    : <FaRegEye size={'1.5rem'} color='var(--text-color)' />
                 }
               </IconButton>
             </div>
           </div>
-          <div className="rf-section">
+          {/* <div className="rf-section">
             <FormControlLabel
               control={
                 <Checkbox
@@ -117,13 +123,14 @@ function SignIn() {
                 Forgot Password?
               </Button>
             </Link>
-          </div>
+          </div> */}
           <Button
             variant='contained'
             className='submit-button'
+            disabled={loadingl || loadingg}
             onClick={() => handleSubmit(false)}
           >
-            Login
+            {loadingl ? <Spinner animation="border" size='sm' className='me-2' /> : ''}Login
           </Button>
           <div className="or-divider">
             <div className="divider"></div>
@@ -133,9 +140,10 @@ function SignIn() {
           <Button
             variant='contained'
             className='submit-button'
+            disabled={loadingl || loadingg}
             onClick={() => handleSubmit(true)}
           >
-            Guest Login
+            {loadingg ? <Spinner animation="border" size='sm' className='me-2' /> : ''}Guest Login
           </Button>
           <div className="signup-link">
             Don't have an account? <Link to='/auth/signup'>Sign Up</Link>

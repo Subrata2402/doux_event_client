@@ -1,14 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useRef, useState } from 'react';
 import Header from '../header/Header';
+import EventCard from '../event/event_card/EventCard';
 import './Home.scss';
 import { useEvent } from '../../store/EventContext';
-import EventCard from '../event/event_card/EventCard';
+import socket from '../../services/socketService';
 
 function Home() {
   const { events, getEvents } = useEvent();
   const [searchText, setSearchText] = useState('');
-  const [filteredEvents, setFilteredEvents] = useState(events);
-  const [filteredType, setFilteredType] = useState('Date');
+  const [filterData, setFilterData] = useState(events);
+  const [category, setCategory] = useState('None');
+  const [date, setDate] = useState(null);
+
+  useEffect(() => {
+    // Listen for events
+    socket.on('update-event', (_) => {
+      getEvents();
+    });
+    // Cleanup on component unmount
+    return () => {
+      socket.off('update-event');
+    };
+  }, []);
 
   useEffect(() => {
     let filtered = events;
@@ -18,20 +31,29 @@ function Home() {
         event.description.toLowerCase().includes(searchText.toLowerCase().trim())
       );
     }
-    setFilteredEvents(filtered);
-  }, [searchText, events]);
+    if (date) {
+      filtered = filtered.filter(event => {
+        const eventDate = new Date(event.date);
+        return eventDate.toDateString() === date.$d.toDateString();
+      });
+    }
+    if (category !== 'None') {
+      filtered = filtered.filter(event => event.category === category);
+    }
+    setFilterData(filtered);
+  }, [searchText, date, category, events]);
 
   return (
     <div className="home-wrapper">
-      <Header setSearchText={setSearchText} searchText={searchText} setFilteredType={setFilteredType} />
+      <Header setSearchText={setSearchText} searchText={searchText} setCategory={setCategory} category={category} date={date} setDate={setDate} />
       {
-        filteredEvents.length === 0
+        filterData.length === 0
           ? <div className="no-events">There are no events found...</div>
           :
           <div className="cards-container">
             <div className="event-cards">
               {
-                filteredEvents.map((event, index) => <EventCard key={index} event={event} />)
+                filterData.map((event, index) => <EventCard key={index} event={event} />)
               }
             </div>
           </div>

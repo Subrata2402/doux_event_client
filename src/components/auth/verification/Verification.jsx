@@ -4,10 +4,12 @@ import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import customSnackBar from '../../snackbar/CustomSnackBar';
 import apiServices from '../../../services/apiServices';
+import Spinner from 'react-bootstrap/esm/Spinner';
 
 function Verification() {
   const location = useLocation();
   const [otp, setOtp] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   let userEmail = null;
   if (location.state) {
@@ -17,6 +19,7 @@ function Verification() {
   }
 
   const verifyEmail = async () => {
+    setLoading(true);
     try {
       const response = await apiServices.verifyEmail({ email: location.state.email, otp: otp.trim() });
       if (response.success) {
@@ -26,6 +29,7 @@ function Verification() {
     } catch (error) {
       customSnackBar(error.message);
     }
+    setLoading(false);
   }
 
   return (
@@ -51,8 +55,8 @@ function Verification() {
                 />
               </div>
               <div className="submit-button">
-                <Button color="primary" onClick={verifyEmail}>
-                  Verify
+                <Button color="primary" onClick={verifyEmail} disabled={loading}>
+                  {loading ? <Spinner animation="border" size='sm' className='me-2' /> : ''}Verify
                 </Button>
               </div>
             </div>

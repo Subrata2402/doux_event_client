@@ -6,6 +6,7 @@ import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import './SignUp.scss';
 import customSnackBar from '../../snackbar/CustomSnackBar';
 import apiServices from '../../../services/apiServices';
+import Spinner from 'react-bootstrap/esm/Spinner';
 
 function SignUp() {
   const [credentials, setCredentials] = useState({
@@ -18,12 +19,13 @@ function SignUp() {
   const passwordInput = useRef(null);
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
     if (!credentials.name || !credentials.email || !credentials.password || !credentials.cpassword) {
       return customSnackBar('All fields are required');
     }
-    console.log(credentials);
+    setLoading(true);
     try {
       const response = await apiServices.register(credentials);
       if (response.success) {
@@ -33,6 +35,7 @@ function SignUp() {
     } catch (error) {
       customSnackBar(error.message);
     }
+    setLoading(false);
   };
 
   if (pathname === '/auth/signup/verification') {
@@ -101,8 +104,8 @@ function SignUp() {
               <IconButton onClick={() => setShowPassword(!showPassword)} className='visibility-hidden'>
                 {
                   showPassword ?
-                    <FaRegEyeSlash size={'1.5rem'} />
-                    : <FaRegEye size={'1.5rem'} />
+                    <FaRegEyeSlash size={'1.5rem'} color='var(--text-color)' />
+                    : <FaRegEye size={'1.5rem'} color='var(--text-color)' />
                 }
               </IconButton>
             </div>
@@ -125,8 +128,8 @@ function SignUp() {
               <IconButton onClick={() => setShowPassword(!showPassword)}>
                 {
                   showPassword ?
-                    <FaRegEyeSlash size={'1.5rem'} />
-                    : <FaRegEye size={'1.5rem'} />
+                    <FaRegEyeSlash size={'1.5rem'} color='var(--text-color)' />
+                    : <FaRegEye size={'1.5rem'} color='var(--text-color)' />
                 }
               </IconButton>
             </div>
@@ -136,10 +139,10 @@ function SignUp() {
             className='submit-button'
             onClick={handleSubmit}
           >
-            Sign Up
+            {loading ? <Spinner animation="border" size='sm' className='me-2' /> : ''}Sign Up
           </Button>
           <div className="signup-link">
-            Already have an account? <Link to='/auth/signup'>Sign In</Link>
+            Already have an account? <Link to='/auth/signin'>Sign In</Link>
           </div>
         </div>
       </div>
