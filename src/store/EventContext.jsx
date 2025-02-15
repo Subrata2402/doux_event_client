@@ -9,6 +9,14 @@ const EventProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [events, setEvents] = useState([]);
 
+  /**
+   * Fetches the list of events from the API and updates the state with the retrieved data.
+   * 
+   * @async
+   * @function getEvents
+   * @returns {Promise<Array>} The list of events retrieved from the API.
+   * @throws Will log an error message to the console if the API request fails.
+   */
   const getEvents = async () => {
     try {
       const response = await apiServices.eventList();

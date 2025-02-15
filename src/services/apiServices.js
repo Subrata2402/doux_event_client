@@ -6,12 +6,26 @@ class ApiService extends ApiConnection {
     super();
   }
 
+  /**
+   * Asynchronously retrieves the visitor's fingerprint ID.
+   * 
+   * @returns {Promise<string>} A promise that resolves to the visitor's fingerprint ID.
+   */
   async getFingerprint() {
     const fp = await FingerprintJS.load();
     const result = await fp.get();
     return result.visitorId;
   }
 
+  /**
+   * Logs in a user with the provided credentials.
+   *
+   * @param {Object} credentials - The user's login credentials.
+   * @param {string} credentials.email - The user's email.
+   * @param {string} credentials.password - The user's password.
+   * @returns {Promise<Object>} The response data from the login request.
+   * @throws {Object} The error response data if the login request fails.
+   */
   async login(credentials) {
     const browserId = await this.getFingerprint();
     credentials.browserId = browserId;
@@ -23,6 +37,12 @@ class ApiService extends ApiConnection {
     }
   }
 
+  /**
+   * Logs in a guest user using the provided credentials.
+   *
+   * @param {Object} credentials - The credentials for guest login.
+   * @returns {Promise<Object>} The response data from the guest login request.
+   */
   async guestLogin(credentials) {
     const browserId = await this.getFingerprint();
     credentials.browserId = browserId;
@@ -35,6 +55,17 @@ class ApiService extends ApiConnection {
     }
   }
 
+  /**
+   * Registers a new user with the provided user data.
+   *
+   * @param {Object} userData - The data of the user to register.
+   * @param {string} userData.name - The name of the user.
+   * @param {string} userData.email - The email of the user.
+   * @param {string} userData.password - The password of the user.
+   * @param {string} userData.cpassword - The confirm password of the user.
+   * @returns {Promise<Object>} The response data from the registration request.
+   * @throws {Object} The error response data if the registration request fails.
+   */
   async register(userData) {
     const browserId = await this.getFingerprint();
     userData.browserId = browserId;
@@ -46,6 +77,15 @@ class ApiService extends ApiConnection {
     }
   }
 
+  /**
+   * Verifies the user's email by sending a POST request to the server.
+   *
+   * @param {Object} data - The data to be sent in the request body.
+   * @param {string} data.email - The email address to be verified.
+   * @param {string} data.otp - The OTP to verify the email.
+   * @returns {Promise<Object>} The response data from the server.
+   * @throws {Object} The error response data if the request fails.
+   */
   async verifyEmail(data) {
     try {
       const response = await this.post('/auth/verify-email', data);
@@ -55,6 +95,14 @@ class ApiService extends ApiConnection {
     }
   }
 
+  /**
+   * Resends the OTP (One-Time Password) to the user.
+   *
+   * @param {Object} data - The data to be sent in the request body.
+   * @param {string} data.email - The email address of the user.
+   * @returns {Promise<Object>} The response data from the server.
+   * @throws {Object} The error response data if the request fails.
+   */
   async resendOtp(data) {
     try {
       const response = await this.post('/auth/resend-otp', data);
@@ -64,6 +112,12 @@ class ApiService extends ApiConnection {
     }
   }
 
+  /**
+   * Fetches the profile details of the authenticated user.
+   *
+   * @returns {Promise<Object>} A promise that resolves to the profile details data.
+   * @throws {Object} An error object containing the response data if the request fails.
+   */
   async profileDetails() {
     try {
       const response = await this.get('/auth/profile-details');
@@ -73,6 +127,13 @@ class ApiService extends ApiConnection {
     }
   }
 
+  /**
+   * Creates a new event by sending a POST request with the provided data.
+   *
+   * @param {Object} data - The data for the new event.
+   * @returns {Promise<Object>} The response data from the server.
+   * @throws {Object} The error response data if the request fails.
+   */
   async createEvent(data) {
     try {
       const response = await this.formDataPost('/event/create-event', data);
@@ -82,6 +143,12 @@ class ApiService extends ApiConnection {
     }
   }
 
+  /**
+   * Fetches the list of events from the server.
+   *
+   * @returns {Promise<Object>} A promise that resolves to the response data containing the list of events.
+   * @throws {Object} The error response data if the request fails.
+   */
   async eventList() {
     try {
       const response = await this.get('/event/list');
@@ -91,6 +158,13 @@ class ApiService extends ApiConnection {
     }
   }
 
+  /**
+   * Joins an event by its ID.
+   *
+   * @param {string} eventId - The ID of the event to join.
+   * @returns {Promise<Object>} The response data from the server.
+   * @throws {Object} The error response data if the request fails.
+   */
   async joinEvent(eventId) {
     try {
       const response = await this.get(`/event/${eventId}/join`);
@@ -100,6 +174,13 @@ class ApiService extends ApiConnection {
     }
   }
 
+  /**
+   * Sends a request to leave an event.
+   *
+   * @param {string} eventId - The ID of the event to leave.
+   * @returns {Promise<Object>} The response data from the server.
+   * @throws {Object} The error response data if the request fails.
+   */
   async leaveEvent(eventId) {
     try {
       const response = await this.get(`/event/${eventId}/leave`);
@@ -109,6 +190,13 @@ class ApiService extends ApiConnection {
     }
   }
 
+  /**
+   * Deletes an event by its ID.
+   *
+   * @param {string} eventId - The ID of the event to delete.
+   * @returns {Promise<Object>} The response data from the API.
+   * @throws {Object} The error response data if the request fails.
+   */
   async deleteEvent(eventId) {
     try {
       const response = await this.get(`/event/${eventId}/delete`);

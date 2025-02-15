@@ -18,12 +18,25 @@ function Verification() {
     userEmail = userEmail.join('@');
   }
 
+  /**
+   * Verifies the user's email using the provided OTP.
+   * 
+   * This function sets the loading state to true, then attempts to verify the email
+   * by calling the `apiServices.verifyEmail` method with the email and trimmed OTP.
+   * If the verification is successful, it navigates the user to the sign-in page,
+   * optionally redirecting to a specified path. It also displays a custom snackbar
+   * message based on the response or error.
+   * 
+   * @async
+   * @function verifyEmail
+   * @returns {Promise<void>} A promise that resolves when the email verification process is complete.
+   */
   const verifyEmail = async () => {
     setLoading(true);
     try {
       const response = await apiServices.verifyEmail({ email: location.state.email, otp: otp.trim() });
       if (response.success) {
-        navigate('/auth/signin');
+        navigate('/auth/signin', { state: { redirectTo: location.state?.redirectTo || '/' } });
       }
       customSnackBar(response.message);
     } catch (error) {

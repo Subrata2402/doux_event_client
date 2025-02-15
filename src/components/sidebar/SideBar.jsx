@@ -36,6 +36,16 @@ function SideBar() {
     { text: 'Logout', icon: <MdLogout color='var(--text-color)' size={20} /> }
   ]);
 
+  /**
+   * Handles the user logout process.
+   * 
+   * This function performs the following actions:
+   * 1. Removes the authentication token from local storage.
+   * 2. Updates the state to indicate the user is logged out.
+   * 3. Navigates the user to the sign-in page.
+   * 4. Displays a snackbar notification indicating successful logout.
+   * 5. Closes any open dialogs or menus.
+   */
   const handleLogout = () => {
     localStorage.removeItem('token');
     setIsLoggedIn(false);
@@ -105,7 +115,7 @@ function SideBar() {
                 onClick={handleClose}
                 id="sort-menu"
                 menuList={menuList}
-                onMenuItemClick={handleLogout}
+                onMenuItemClick={() => setShowModal(true)}
                 width="15rem"
               />
               <div className="profile-name">{profileDetails.name}</div>

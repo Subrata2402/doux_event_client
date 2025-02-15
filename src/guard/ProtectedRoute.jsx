@@ -1,7 +1,6 @@
 import React from 'react'
 import { useAuth } from '../store/AuthContext';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import customSnackBar from '../components/snackbar/CustomSnackBar';
 
 const ProtectedRoute = () => {
     const { isLoggedIn, profileDetails } = useAuth();

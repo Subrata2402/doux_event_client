@@ -4,6 +4,21 @@ import MenuItem from '@mui/material/MenuItem';
 import { FaCheck } from "react-icons/fa6";
 import './StyledMenu.scss';
 
+/**
+ * StyledMenu component renders a customized Material-UI Menu with specific styles and behaviors.
+ *
+ * @component
+ * @param {Object} props - The properties object.
+ * @param {string} props.id - The id of the Menu component.
+ * @param {HTMLElement} props.anchorEl - The element that the Menu is anchored to.
+ * @param {boolean} props.open - Boolean flag to control the visibility of the Menu.
+ * @param {function} props.onClose - Callback function to handle the closing of the Menu.
+ * @param {Array} props.menuList - Array of menu items to be displayed in the Menu.
+ * @param {function} props.onMenuItemClick - Callback function to handle the click event on a menu item.
+ * @param {number} [props.width=100] - Optional width of the Menu items.
+ *
+ * @returns {JSX.Element} The rendered Menu component.
+ */
 function StyledMenu(props) {
   return (
     <Menu

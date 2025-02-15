@@ -16,13 +16,21 @@ function SignIn() {
     password: ''
   });
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
+  // const [rememberMe, setRememberMe] = useState(false);
   const [loadingl, setLoadingl] = useState(false);
   const [loadingg, setLoadingg] = useState(false);
   const passwordInput = useRef(null);
   const navigate = useNavigate();
-  const { pathname } = useLocation();
+  const { state, pathname } = useLocation();
 
+  /**
+   * Handles the submission of the sign-in form.
+   * 
+   * @param {boolean} isGuest - Indicates whether the user is signing in as a guest.
+   * @returns {Promise<void>} - A promise that resolves when the sign-in process is complete.
+   * 
+   * @throws {Error} - Throws an error if the sign-in process fails.
+   */
   const handleSubmit = async (isGuest) => {
     let response;
     try {
@@ -34,13 +42,13 @@ function SignIn() {
         response = await apiServices.login(credentials);
       }
       if (response.success) {
-        navigate('/');
+        navigate(state?.redirectTo || '/', { replace: true });
         storeToken(response.data?.accessToken);
         setProfileDetails(response.data?.user);
         customSnackBar(response.message);
       } else {
         if (response.message === 'Email not verified') {
-          navigate('/auth/signup/verification', { state: { email: credentials.email } });
+          navigate('/auth/signup/verification', { state: { email: credentials.email, redirectTo: state?.redirectTo || '/' } });
           customSnackBar('Please verify your email to login');
         } else {
           customSnackBar(response.message);

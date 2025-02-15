@@ -1,7 +1,6 @@
-import { Button, IconButton, Tooltip } from '@mui/material'
+import { Button } from '@mui/material'
 import React, { useState } from 'react'
-import { FaRegCircleXmark } from 'react-icons/fa6';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './CreateEvent.scss';
 import apiServices from '../../../services/apiServices';
 import customSnackBar from '../../snackbar/CustomSnackBar';
@@ -9,6 +8,16 @@ import { useEvent } from '../../../store/EventContext';
 import socket from '../../../services/socketService';
 import Spinner from 'react-bootstrap/esm/Spinner';
 
+/**
+ * CreateEvent component allows users to create a new event by filling out a form.
+ * 
+ * This component includes fields for event name, date, time, location, category, description, and an image.
+ * It validates the input data and sends a request to create the event. If successful, it navigates to the home page,
+ * fetches the updated list of events, and emits an 'update-event' event via socket.
+ * 
+ * @component
+ * @returns {JSX.Element} The rendered CreateEvent component.
+ */
 function CreateEvent() {
   const { getEvents } = useEvent();
   const [fileName, setFileName] = useState('');
@@ -24,7 +33,20 @@ function CreateEvent() {
   });
   const [loading, setLoading] = useState(false);
 
-  const categories = ['Music', 'Sports', 'Food', 'Travel', 'Education', 'Business', 'Health', 'Fashion', 'Technology', 'Art', 'Science', 'Other'];
+  const categories = [
+    'Music',
+    'Sports',
+    'Food',
+    'Travel',
+    'Education',
+    'Business',
+    'Health',
+    'Fashion',
+    'Technology',
+    'Art',
+    'Science',
+    'Other'
+  ];
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -36,7 +58,22 @@ function CreateEvent() {
     }
   };
 
+  /**
+   * Asynchronously creates a new event.
+   * 
+   * This function validates the event data, sets the loading state, and sends a request to create the event.
+   * If the event is successfully created, it navigates to the home page, fetches the updated list of events,
+   * and emits an 'update-event' event via socket. It also displays appropriate messages using customSnackBar.
+   * 
+   * @async
+   * @function createEvent
+   * @returns {Promise<void>} - A promise that resolves when the event creation process is complete.
+   * @throws {Error} - Throws an error if the event creation fails.
+   */
   const createEvent = async () => {
+    if (!eventData.name || !eventData.date || !eventData.time || !eventData.location || !eventData.category || !eventData.description || !eventData['event-image']) {
+      return customSnackBar('All fields are required');
+    }
     setLoading(true);
     try {
       const formData = new FormData();
@@ -61,15 +98,6 @@ function CreateEvent() {
       <div className='event-container'>
         <div className="header">
           <h2 className="form-title m-0">Create Event</h2>
-          {/* <div className="back-button">
-            <Tooltip title='Back' placement='left'>
-              <Link to='/'>
-                <IconButton>
-                  <FaRegCircleXmark size={30} color='var(--text-color)' />
-                </IconButton>
-              </Link>
-            </Tooltip>
-          </div> */}
         </div>
         <div className="event-form">
           <div className="row m-0 p-0">
@@ -169,7 +197,7 @@ function CreateEvent() {
                 disabled={loading}
                 onClick={createEvent}
               >
-                { loading ? <Spinner animation="border" size='md' className='me-2' /> : "" }Create Event
+                {loading ? <Spinner animation="border" size='md' className='me-2' /> : ""}Create Event
               </Button>
             </div>
           </div>

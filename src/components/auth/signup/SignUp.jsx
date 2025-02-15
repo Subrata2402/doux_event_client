@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { FaRegEyeSlash, FaRegUser, FaRegEye, FaArrowCircleLeft } from "react-icons/fa";
 import { MdOutlinePassword, MdOutlineEmail } from "react-icons/md";
 import { Button, IconButton } from '@mui/material';
-import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { Link, Outlet, redirect, useLocation, useNavigate } from 'react-router-dom';
 import './SignUp.scss';
 import customSnackBar from '../../snackbar/CustomSnackBar';
 import apiServices from '../../../services/apiServices';
@@ -20,7 +20,17 @@ function SignUp() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const [loading, setLoading] = useState(false);
+  const location = useLocation();
 
+  /**
+   * Handles the form submission for user registration.
+   * Validates the input fields and sends the registration request to the server.
+   * Displays appropriate messages based on the response.
+   * 
+   * @async
+   * @function handleSubmit
+   * @returns {void}
+   */
   const handleSubmit = async () => {
     if (!credentials.name || !credentials.email || !credentials.password || !credentials.cpassword) {
       return customSnackBar('All fields are required');
@@ -29,7 +39,7 @@ function SignUp() {
     try {
       const response = await apiServices.register(credentials);
       if (response.success) {
-        navigate('/auth/signup/verification', { state: { email: credentials.email } });
+        navigate('/auth/signup/verification', { state: { email: credentials.email, redirectTo: location.state?.redirectTo || '/' } });
       }
       customSnackBar(response.message);
     } catch (error) {

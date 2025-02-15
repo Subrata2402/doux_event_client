@@ -3,6 +3,18 @@ import Modal from 'react-bootstrap/Modal';
 import parse from 'html-react-parser';
 import { Button } from '@mui/material';
 
+/**
+ * Confirmation component renders a modal dialog for user confirmation.
+ *
+ * @param {Object} props - The properties object.
+ * @param {boolean} props.show - Determines if the modal is visible.
+ * @param {function} props.handleClose - Function to handle closing the modal.
+ * @param {function} props.onConfirm - Function to handle the confirmation action.
+ * @param {string} [props.title] - Optional title for the confirmation modal.
+ * @param {string} props.message - The message to display in the confirmation modal.
+ *
+ * @returns {JSX.Element} The rendered Confirmation component.
+ */
 function Confirmation(props) {
   const { show, handleClose, onConfirm } = props;
 
