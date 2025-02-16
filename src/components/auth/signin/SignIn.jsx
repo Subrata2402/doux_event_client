@@ -42,7 +42,7 @@ function SignIn() {
         response = await apiServices.login(credentials);
       }
       if (response.success) {
-        navigate(state?.redirectTo || '/', { replace: true });
+        navigate('/');
         storeToken(response.data?.accessToken);
         setProfileDetails(response.data?.user);
         customSnackBar(response.message);

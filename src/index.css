@@ -16,7 +16,7 @@
   --red-color: rgb(239, 118, 118);
   --button-color: rgb(112, 112, 112);
   --button-text-color: rgb(255, 255, 255);
-  --del-btn-color: #493D9E;
+  --green-color: rgb(0, 200, 83);
 }
 
 [data-theme="dark"] {

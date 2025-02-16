@@ -205,6 +205,22 @@ class ApiService extends ApiConnection {
       return error.response.data;
     }
   }
+
+  /**
+   * Fetches the details of an event by its ID.
+   *
+   * @param {string} eventId - The ID of the event to fetch.
+   * @returns {Promise<Object>} The response data from the server.
+   * @throws {Object} The error response data if the request fails.
+   */
+  async eventDetails(eventId) {
+    try {
+      const response = await this.get(`/event/${eventId}`);
+      return response.data;
+    } catch (error) {
+      return error.response.data;
+    }
+  }
 }
 
 export default new ApiService();

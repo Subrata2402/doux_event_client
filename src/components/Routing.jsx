@@ -11,6 +11,7 @@ const ProtectedRoute = lazy(() => import('../guard/ProtectedRoute'));
 const GuestRoute = lazy(() => import('../guard/GuestRoute'));
 const Verification = lazy(() => import('./auth/verification/Verification'));
 const CreateEvent = lazy(() => import('./event/create_event/CreateEvent'));
+const EventDetails = lazy(() => import('./event/event_details/EventDetails'));
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,14 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<Loader />}>
             <Home />
+          </Suspense>
+        )
+      },
+      {
+        path: '/events/:eventId',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <EventDetails />
           </Suspense>
         )
       },

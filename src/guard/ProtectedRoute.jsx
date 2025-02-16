@@ -9,7 +9,7 @@ const ProtectedRoute = () => {
 
     if (!isLoggedIn) {
         // If the user is not logged in, redirect to the login page
-        return <Navigate to="/auth/signin" replace state={{ redirectTo: pathname }} />;
+        return <Navigate to="/auth/signin" state={{ redirectTo: pathname }} />;
     }
 
     if (profileDetails?.isGuest) {
