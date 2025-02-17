@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './EventCard.scss';
-import { useEvent } from '../../../store/EventContext';
 import customSnackBar from '../../snackbar/CustomSnackBar';
 import ApiConnection from '../../../connections/api_connection';
 import { Button, Tooltip } from '@mui/material';
@@ -20,7 +19,6 @@ import Spinner from 'react-bootstrap/Spinner';
  * @returns {JSX.Element} The rendered EventCard component.
  */
 function EventCard(props) {
-  const { getEvents } = useEvent();
   const { profileDetails, isLoggedIn } = useAuth();
   const apiConnection = new ApiConnection();
   const [cnfModalShow, setCnfModalShow] = useState(false);
@@ -55,7 +53,6 @@ function EventCard(props) {
     try {
       const response = await apiServices.joinEvent(props.event._id);
       if (response.success) {
-        getEvents();
         socket.emit('update-event', response.data);
       }
       customSnackBar(response.message);
@@ -82,7 +79,6 @@ function EventCard(props) {
     try {
       const response = await apiServices.leaveEvent(props.event._id);
       if (response.success) {
-        getEvents();
         socket.emit('update-event', response.data);
       }
       customSnackBar(response.message);
@@ -108,7 +104,6 @@ function EventCard(props) {
     try {
       const response = await apiServices.deleteEvent(props.event._id);
       if (response.success) {
-        getEvents();
         socket.emit('update-event', response.data);
       }
       customSnackBar(response.message);

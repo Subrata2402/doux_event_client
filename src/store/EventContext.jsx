@@ -1,7 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import Loader from "../components/loader/Loader";
 import apiServices from "../services/apiServices";
-import socket from "../services/socketService";
 
 export const EventContext = createContext();
 

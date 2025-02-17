@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import './CreateEvent.scss';
 import apiServices from '../../../services/apiServices';
 import customSnackBar from '../../snackbar/CustomSnackBar';
-import { useEvent } from '../../../store/EventContext';
 import socket from '../../../services/socketService';
 import Spinner from 'react-bootstrap/esm/Spinner';
 
@@ -19,7 +18,6 @@ import Spinner from 'react-bootstrap/esm/Spinner';
  * @returns {JSX.Element} The rendered CreateEvent component.
  */
 function CreateEvent() {
-  const { getEvents } = useEvent();
   const [fileName, setFileName] = useState('');
   const navigate = useNavigate();
   const [eventData, setEventData] = useState({
@@ -83,7 +81,6 @@ function CreateEvent() {
       const response = await apiServices.createEvent(formData);
       if (response.success) {
         navigate('/');
-        getEvents();
         socket.emit('update-event', response.data);
       }
       customSnackBar(response.message);
