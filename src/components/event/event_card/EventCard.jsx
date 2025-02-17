@@ -88,7 +88,7 @@ function EventCard(props) {
             </Button>
           </Tooltip>
         </Link>
-        {
+        {/* {
           profileDetails?._id === props.event?.organizer &&
           <>
             <Tooltip title='Delete the event' placement='top'>
@@ -104,7 +104,7 @@ function EventCard(props) {
               handleClose={() => setDelModalShow(false)}
             />
           </>
-        }
+        } */}
         
       </div>
     </div>

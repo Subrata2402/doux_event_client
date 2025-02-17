@@ -52,9 +52,6 @@ const EventProvider = ({ children }) => {
     if (!isLoggedIn) {
       return customSnackBar('Please login to join the event');
     }
-    if (profileDetails?._id === event?.organizer) {
-      return customSnackBar('You can\'t join your own event');
-    }
     setLoading(true);
     try {
       const response = await apiServices.joinEvent(event?._id);
