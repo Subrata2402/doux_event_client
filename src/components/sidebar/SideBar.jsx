@@ -17,7 +17,7 @@ import StyledMenu from '../menu/StyledMenu';
 function SideBar() {
   const location = useLocation();
   const { theme, toggleTheme } = useTheme();
-  const { profileDetails, isLoggedIn, setIsLoggedIn } = useAuth();
+  const { profileDetails, isLoggedIn, setIsLoggedIn, setProfileDetails } = useAuth();
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
 
@@ -49,6 +49,7 @@ function SideBar() {
   const handleLogout = () => {
     localStorage.removeItem('token');
     setIsLoggedIn(false);
+    setProfileDetails({});
     navigate('/auth/signin');
     customSnackBar('Logged out successfully');
     handleClose();
