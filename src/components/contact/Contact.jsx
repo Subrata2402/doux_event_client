@@ -11,7 +11,8 @@ function Contact() {
         message: ''
     });
 
-    const handleSubmit = () => {
+    const handleSubmit = (e) => {
+        e.preventDefault();
         if (!formData.name || !formData.email || !formData.subject || !formData.message) {
             return customSnackBar('Please fill all the fields');
         }
@@ -28,7 +29,7 @@ function Contact() {
         <div className="contact">
             <h2 className='section-title'>Contact Us</h2>
             <div className="divider"></div>
-            <form action="" className="contact-form row m-0">
+            <form action="" className="contact-form row m-0" onSubmit={handleSubmit}>
                 <div className='col-md-6'>
                     <input
                         type="text"
@@ -36,6 +37,7 @@ function Contact() {
                         className='mb-3'
                         value={formData.name}
                         onChange={e => setFormData({ ...formData, name: e.target.value })}
+                        required
                     />
                     <input
                         type="email"
@@ -43,6 +45,7 @@ function Contact() {
                         className='mb-3'
                         value={formData.email}
                         onChange={e => setFormData({ ...formData, email: e.target.value })}
+                        required
                     />
                     <input
                         type="text"
@@ -50,6 +53,7 @@ function Contact() {
                         className='mb-3'
                         value={formData.subject}
                         onChange={e => setFormData({ ...formData, subject: e.target.value })}
+                        required
                     />
                 </div>
                 <div className='col-md-6 mb-3'>
@@ -63,11 +67,12 @@ function Contact() {
                             ...formData, message: e
                                 .target.value
                         })}
+                        required
                     >
                     </textarea>
                 </div>
                 <div className="col-md-12 d-flex justify-content-center">
-                    <Button onClick={handleSubmit}>
+                    <Button type='submit'>
                         Send Message
                     </Button>
                 </div>
