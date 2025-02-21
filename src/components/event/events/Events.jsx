@@ -54,6 +54,8 @@ function Events() {
     if (category !== 'None') {
       filtered = filtered.filter(event => event.category === category);
     }
+    // reverse the events to show the latest event first
+    filtered = [...filtered].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     setFilterData(filtered);
   }, [searchText, date, category, events]);
 
