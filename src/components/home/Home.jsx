@@ -34,7 +34,7 @@ function Home() {
 
   useEffect(() => {
     let filtered = events;
-    filtered = filtered.sort((a, b) => new Date(a.date) - new Date(b.date));
+    filtered = [...filtered].sort((a, b) => new Date(a.date) - new Date(b.date));
     setFilteredEvents(filtered.slice(0, 5));
   }, [events]);
 

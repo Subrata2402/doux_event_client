@@ -74,6 +74,10 @@ function CreateEvent() {
     if (!eventData.name || !eventData.date || !eventData.time || !eventData.location || !eventData.category || !eventData.description || !eventData['event-image']) {
       return customSnackBar('All fields are required');
     }
+    // check if the file is image or not
+    if (!eventData['event-image'].type.includes('image')) {
+      return customSnackBar('Please upload an image file');
+    }
     setLoading(true);
     try {
       const formData = new FormData();
@@ -82,7 +86,7 @@ function CreateEvent() {
       }
       const response = await apiServices.createEvent(formData);
       if (response.success) {
-        navigate('/');
+        navigate('/events');
         getEvents();
         socket.emit('update-event', response.data);
       }
