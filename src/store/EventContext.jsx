@@ -10,7 +10,7 @@ export const EventContext = createContext();
 const EventProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [events, setEvents] = useState([]);
-  const { isLoggedIn, profileDetails } = useAuth();
+  const { isLoggedIn } = useAuth();
 
   /**
    * Fetches the list of events from the API and updates the state with the retrieved data.

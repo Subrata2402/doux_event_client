@@ -34,8 +34,9 @@ function EventDetails() {
       const response = await apiServices.eventDetails(eventId);
       if (response.success) {
         setEvent(response.data);
+      } else {
+        customSnackBar(response.message);
       }
-      customSnackBar(response.message);
     } catch (error) {
       customSnackBar(error.message);
     }
@@ -46,14 +47,13 @@ function EventDetails() {
     fetchEventDetails();
     socket.on('update-event', (data) => {
       if (data._id === eventId) {
-        console.log(data);
         if (data.isDeleted) {
           setEvent(null);
         } else {
           setEvent(data);
         }
-        getEvents();
       }
+      getEvents();
     });
 
     return () => {

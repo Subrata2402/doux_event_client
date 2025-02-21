@@ -18,14 +18,12 @@ import { Link } from 'react-router-dom';
  * @returns {JSX.Element} The rendered EventCard component.
  */
 function EventCard(props) {
-  const { joinEvent, leaveEvent, deleteEvent } = useEvent();
+  const { joinEvent, leaveEvent } = useEvent();
   const { profileDetails } = useAuth();
   const apiConnection = new ApiConnection();
   const [cnfModalShow, setCnfModalShow] = useState(false);
-  const [delModalShow, setDelModalShow] = useState(false);
   const [loadingj, setLoadingj] = useState(false);
   const [loadingl, setLoadingl] = useState(false);
-  const [loadingd, setLoadingd] = useState(false);
 
   return (
     <div className="event-card">

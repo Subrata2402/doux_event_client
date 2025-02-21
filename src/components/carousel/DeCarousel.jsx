@@ -1,40 +1,51 @@
-import React, { useState } from 'react';
-import Carousel from 'react-bootstrap/Carousel';
-// import ExampleCarouselImage from 'components/ExampleCarouselImage';
+import React from 'react';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from 'react-responsive-carousel';
+import './DeCarousel.scss';
+import { Button, Tooltip } from '@mui/material';
+import { Link } from 'react-router-dom';
+import ApiConnection from '../../connections/api_connection';
 
-function DeCarousel() {
-  const [index, setIndex] = useState(0);
 
-  const handleSelect = (selectedIndex) => {
-    setIndex(selectedIndex);
-  };
+function DeCarousel(props) {
+  const apiConnection = new ApiConnection();
 
   return (
-    <Carousel activeIndex={index} onSelect={handleSelect}>
-      <Carousel.Item>
-        <img src="https://cdn-cjhkj.nitrocdn.com/krXSsXVqwzhduXLVuGLToUwHLNnSxUxO/assets/images/optimized/rev-847a2d1/spotme.com/wp-content/uploads/2020/07/Hero-1.jpg" alt="event" />
-        <Carousel.Caption>
-          <h3>First slide label</h3>
-          <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item>
-        <img src="https://cdn-cjhkj.nitrocdn.com/krXSsXVqwzhduXLVuGLToUwHLNnSxUxO/assets/images/optimized/rev-847a2d1/spotme.com/wp-content/uploads/2020/07/Hero-1.jpg" alt="event" />
-        <Carousel.Caption>
-          <h3>Second slide label</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item>
-        <img src="https://cdn-cjhkj.nitrocdn.com/krXSsXVqwzhduXLVuGLToUwHLNnSxUxO/assets/images/optimized/rev-847a2d1/spotme.com/wp-content/uploads/2020/07/Hero-1.jpg" alt="event" />
-        <Carousel.Caption>
-          <h3>Third slide label</h3>
-          <p>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-          </p>
-        </Carousel.Caption>
-      </Carousel.Item>
-    </Carousel>
+    <div className="de-carousel">
+      <Carousel
+        autoPlay={true}
+        infiniteLoop={true}
+        useKeyboardArrows={true}
+        showThumbs={false}
+        showStatus={false}
+        
+      >
+        {
+          props.events?.map(event => (
+            <div className='slide-item'>
+              <img src={`${apiConnection.baseUrl}/images/${event?.image}`} alt={event?.name} />
+              <div className="slide-content">
+                <h3 className='slide-title'>{event.name}</h3>
+                <div className="date-time">
+                  <span>
+                    {new Date(event?.date).toDateString().slice(4)}
+                  </span>
+                  <div className='dot'></div>
+                  <span>
+                    {event?.time}
+                  </span>
+                </div>
+                <Link to={`/events/${event._id}`}>
+                  <Tooltip title='View event details' placement='top'>
+                    <Button variant='contained' className='btn'>View Event</Button>
+                  </Tooltip>
+                </Link>
+              </div>
+            </div>
+          ))
+        }
+      </Carousel>
+    </div>
   )
 }
 

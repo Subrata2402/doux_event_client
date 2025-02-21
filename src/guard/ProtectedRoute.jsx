@@ -15,7 +15,7 @@ const ProtectedRoute = () => {
     if (profileDetails?.isGuest) {
         
         // If the user is a guest, redirect to the home page
-        return <Navigate to="/" />;
+        return <Navigate to={"/"} />;
     }
 
     return <Outlet />;
