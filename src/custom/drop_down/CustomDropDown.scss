@@ -1,0 +1,16 @@
+.MuiFormControl-root {
+  margin: 0 !important;
+  width: 100% !important;
+}
+
+.MuiSvgIcon-root.MuiSelect-icon {
+  color: var(--text-color) !important;
+}
+
+.MuiButtonBase-root.MuiMenuItem-root.Mui-selected {
+  background-color: var(--grey-200) !important;
+}
+
+.MuiButtonBase-root.MuiMenuItem-root:hover {
+  background-color: var(--grey-200) !important;
+}

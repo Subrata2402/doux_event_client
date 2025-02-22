@@ -34,6 +34,25 @@
   --grey-100: rgb(140, 140, 140);
 }
 
+::-webkit-scrollbar {
+  width: 0.5rem;
+  padding-left: 0.5rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--grey-200);
+  border-radius: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--grey-240);
+  border-radius: 0.5rem;
+}
+
+::placeholder {
+  color: var(--grey-200);
+}
+
 html {
   font-size: 16px;
 }

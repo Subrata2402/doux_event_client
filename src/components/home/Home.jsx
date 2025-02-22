@@ -34,7 +34,12 @@ function Home() {
 
   useEffect(() => {
     let filtered = events;
-    filtered = [...filtered].sort((a, b) => new Date(a.date) - new Date(b.date));
+    const currentDate = new Date();
+    
+    // Filter events that are in the future and sort them by date
+    filtered = [...filtered]
+      .filter(event => new Date(event.date) >= currentDate)
+      .sort((a, b) => new Date(a.date) - new Date(b.date));
     setFilteredEvents(filtered.slice(0, 5));
   }, [events]);
 

@@ -1,0 +1,10 @@
+.MuiFormControl-root.MuiTextField-root {
+  width: 100% !important;
+}
+
+.MuiButtonBase-root.MuiButton-root {
+  background-color: var(--button-color);
+  color: var(--button-text-color);
+  border-radius: 0.5rem;
+  font-weight: 600;
+}

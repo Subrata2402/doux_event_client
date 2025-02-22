@@ -7,6 +7,9 @@ import customSnackBar from '../../snackbar/CustomSnackBar';
 import { useEvent } from '../../../store/EventContext';
 import socket from '../../../services/socketService';
 import Spinner from 'react-bootstrap/esm/Spinner';
+import CustomDatePicker from '../../../custom/date_picker/CustomDatePicker';
+import CustomTimePicker from '../../../custom/time_picker/CustomTimePicker';
+import CustomDropDown from '../../../custom/drop_down/CustomDropDown';
 
 /**
  * CreateEvent component allows users to create a new event by filling out a form.
@@ -24,8 +27,8 @@ function CreateEvent() {
   const navigate = useNavigate();
   const [eventData, setEventData] = useState({
     name: '',
-    date: '',
-    time: '',
+    date: null,
+    time: null,
     location: '',
     category: '',
     description: '',
@@ -71,6 +74,7 @@ function CreateEvent() {
    * @throws {Error} - Throws an error if the event creation fails.
    */
   const createEvent = async () => {
+    console.log(eventData);
     if (!eventData.name || !eventData.date || !eventData.time || !eventData.location || !eventData.category || !eventData.description || !eventData['event-image']) {
       return customSnackBar('All fields are required');
     }
@@ -82,7 +86,13 @@ function CreateEvent() {
     try {
       const formData = new FormData();
       for (let key in eventData) {
-        formData.append(key, eventData[key]);
+        if (key === 'date') {
+          formData.append(key, new Date(eventData[key]).toISOString());
+        } else if (key === 'time') {
+          formData.append(key, new Date(eventData[key]).toLocaleTimeString());
+        } else {
+          formData.append(key, eventData[key]);
+        }
       }
       const response = await apiServices.createEvent(formData);
       if (response.success) {
@@ -114,29 +124,20 @@ function CreateEvent() {
                 className='col-sm-8'
                 onChange={(e) => setEventData({ ...eventData, name: e.target.value })}
                 value={eventData.name}
+                placeholder='Enter event name'
               />
             </div>
             <div className="row m-0 p-0 mb-3 align-items-center">
               <label htmlFor="event-date" className='col-sm-4'> Date <span>*</span></label>
-              <input
-                type="date"
-                name='event-date'
-                id='event-date'
-                className='col-sm-8'
-                onChange={(e) => setEventData({ ...eventData, date: e.target.value })}
-                value={eventData.date}
-              />
+              <div className="col-sm-8 p-0">
+                <CustomDatePicker date={eventData.date} setDate={(date) => setEventData({ ...eventData, date })} width='100%' />
+              </div>
             </div>
             <div className="row m-0 p-0 mb-3 align-items-center">
               <label htmlFor="event-time" className='col-sm-4'> Time <span>*</span></label>
-              <input
-                type="time"
-                name='event-time'
-                id='event-time'
-                className='col-sm-8'
-                onChange={(e) => setEventData({ ...eventData, time: e.target.value })}
-                value={eventData.time}
-              />
+              <div className="col-sm-8 p-0">
+                <CustomTimePicker value={eventData.time} setValue={(time) => setEventData({ ...eventData, time })} />
+              </div>
             </div>
             <div className="row m-0 p-0 mb-3 align-items-center">
               <label htmlFor="event-location" className='col-sm-4'> Location <span>*</span></label>
@@ -147,24 +148,14 @@ function CreateEvent() {
                 className='col-sm-8'
                 onChange={(e) => setEventData({ ...eventData, location: e.target.value })}
                 value={eventData.location}
+                placeholder='Enter event location'
               />
             </div>
             <div className="row m-0 p-0 mb-3 align-items-center">
               <label htmlFor="event-location" className='col-sm-4'> Category <span>*</span></label>
-              <select
-                name="event-category"
-                id="event-category"
-                className='col-sm-8'
-                onChange={(e) => setEventData({ ...eventData, category: e.target.value })}
-                value={eventData.category}
-              >
-                <option value="">Select Category</option>
-                {
-                  categories.map((category, index) => (
-                    <option key={index} value={category}>{category}</option>
-                  ))
-                }
-              </select>
+              <div className="col-sm-8 p-0">
+                <CustomDropDown items={categories} value={eventData.category} setValue={(value) => setEventData({ ...eventData, category: value })} placeholder='Select Category' />
+              </div>
             </div>
             <div className="row m-0 p-0 mb-3 align-items-start">
               <label htmlFor="event-description" className='col-sm-4'> Description <span>*</span></label>
@@ -176,6 +167,7 @@ function CreateEvent() {
                 className='col-sm-8'
                 onChange={(e) => setEventData({ ...eventData, description: e.target.value })}
                 value={eventData.description}
+                placeholder='Enter event description'
               >
               </textarea>
             </div>

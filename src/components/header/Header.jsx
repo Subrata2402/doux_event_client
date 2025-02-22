@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from 'react';
+  import React, { useState } from 'react';
 import { BiSearchAlt } from "react-icons/bi";
 import { MdClear } from "react-icons/md";
 import './Header.scss';
 import { IconButton } from '@mui/material';
 import StyledMenu from '../menu/StyledMenu';
-import { DemoItem } from '@mui/x-date-pickers/internals/demo';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import Box from '@mui/material/Box';
 import { BiCategory } from "react-icons/bi";
+import CustomDatePicker from '../../custom/date_picker/CustomDatePicker';
 
 /**
  * Header component for displaying a search bar and filter options.
@@ -25,18 +21,6 @@ import { BiCategory } from "react-icons/bi";
  * @returns {JSX.Element} The rendered Header component.
  */
 function Header(props) {
-  const [cleared, setCleared] = React.useState(false);
-
-  useEffect(() => {
-    if (cleared) {
-      const timeout = setTimeout(() => {
-        setCleared(false);
-      }, 1500);
-
-      return () => clearTimeout(timeout);
-    }
-    return () => { };
-  }, [cleared]);
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -108,39 +92,7 @@ function Header(props) {
         }
       </div>
       <div className="filter-options">
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <Box
-            sx={{
-              width: '100%',
-              height: '100%',
-              display: 'flex',
-              justifyContent: 'center',
-              position: 'relative',
-
-            }}
-          >
-            <DemoItem>
-              <DesktopDatePicker
-                value={props.date}
-                onChange={(newValue) => props.setDate(newValue)}
-                sx={{ width: 260 }}
-                slotProps={{
-                  layout: {
-                    sx: {
-                      color: 'var(--text-color)',
-                      borderRadius: '2px',
-                      borderWidth: '1px',
-                      borderColor: 'var(--bg-color)',
-                      border: '1px solid',
-                      backgroundColor: 'var(--bg-color)',
-                    }
-                  },
-                  field: { clearable: true, onClear: () => setCleared(true) },
-                }}
-              />
-            </DemoItem>
-          </Box>
-        </LocalizationProvider>
+        <CustomDatePicker date={props.date} setDate={props.setDate} />
         <input type="text" className='category-picker' onClick={handleClick} readOnly value={props.category === 'None' ? 'Select Category' : props.category} />
         <IconButton
           aria-label="delete"
