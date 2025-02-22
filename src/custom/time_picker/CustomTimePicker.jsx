@@ -1,9 +1,9 @@
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import React, { useEffect, useState } from 'react';
 import './CustomTimePicker.scss';
+import { DesktopTimePicker } from '@mui/x-date-pickers/DesktopTimePicker';
 
 /**
  * CustomTimePicker component renders a time picker using Material-UI's TimePicker component.
@@ -37,7 +37,7 @@ function CustomTimePicker(props) {
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
       <DemoContainer components={['TimePicker', 'TimePicker']}>
-        <TimePicker
+        <DesktopTimePicker
           value={props.value}
           onChange={(newValue) => props.setValue(newValue)}
           slotProps={{

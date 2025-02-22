@@ -124,5 +124,9 @@
     .MuiInputBase-root.MuiOutlinedInput-root, .MuiOutlinedInput-notchedOutline {
       border: none;
     }
+
+    .MuiInputBase-root.MuiOutlinedInput-root {
+      width: 100%;
+    }
   }
 }

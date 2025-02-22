@@ -44,7 +44,6 @@ function CustomDatePicker(props) {
           <DesktopDatePicker
             value={props.date}
             onChange={(newValue) => props.setDate(newValue)}
-            sx={{ width: 260 }}
             slotProps={{
               layout: {
                 sx: {
