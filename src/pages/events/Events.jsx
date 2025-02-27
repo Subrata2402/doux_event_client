@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './Events.scss';
-import Header from '../../header/Header';
-import EventCard from '../event_card/EventCard';
-import socket from '../../../services/socketService';
-import { useEvent } from '../../../store/EventContext';
+import Header from '../../components/header/Header';
+import EventCard from '../../components/event/event_card/EventCard';
+import socket from '../../services/socketService';
+import { useEvent } from '../../store/EventContext';
 
 /**
  * Events component that displays a list of events with filtering options.
@@ -54,7 +54,7 @@ function Events() {
     if (category !== 'None') {
       filtered = filtered.filter(event => event.category === category);
     }
-    // reverse the events to show the latest event first
+    // filter the events to show the latest event first
     filtered = [...filtered].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     setFilterData(filtered);
   }, [searchText, date, category, events]);

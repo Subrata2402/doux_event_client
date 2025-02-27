@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import './Home.scss';
 import { useEvent } from '../../store/EventContext';
 import socket from '../../services/socketService';
-import DeCarousel from '../carousel/DeCarousel';
-import Contact from '../contact/Contact';
+import DeCarousel from '../../components/carousel/DeCarousel';
+import Contact from '../../components/contact/Contact';
 
 /**
  * Home component that displays a list of events with filtering options.

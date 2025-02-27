@@ -1,0 +1,23 @@
+.not-found-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  flex-direction: column;
+  padding: 1rem;
+  
+  .home-back {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    p {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text-color);
+      margin: 0;
+    }
+  }
+}

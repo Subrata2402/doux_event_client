@@ -21,8 +21,8 @@ function DeCarousel(props) {
         
       >
         {
-          props.events?.map(event => (
-            <div className='slide-item'>
+          props.events?.map((event, index) => (
+            <div className='slide-item' key={index}>
               <img src={`${apiConnection.baseUrl}/images/${event?.image}`} alt={event?.name} />
               <div className="slide-content">
                 <h3 className='slide-title'>{event.name}</h3>
