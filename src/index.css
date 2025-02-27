@@ -16,7 +16,7 @@
   --red-color: rgb(239, 118, 118);
   --button-color: rgb(112, 112, 112);
   --button-text-color: rgb(255, 255, 255);
-  --del-btn-color: #493D9E;
+  --green-color: rgb(0, 200, 83);
 }
 
 [data-theme="dark"] {
@@ -32,6 +32,25 @@
   --grey-240: rgb(60, 60, 60);
   --grey-200: rgb(100, 100, 100);
   --grey-100: rgb(140, 140, 140);
+}
+
+::-webkit-scrollbar {
+  width: 0.5rem;
+  padding-left: 0.5rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--grey-200);
+  border-radius: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--grey-240);
+  border-radius: 0.5rem;
+}
+
+::placeholder {
+  color: var(--grey-200);
 }
 
 html {

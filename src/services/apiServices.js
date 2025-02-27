@@ -46,7 +46,6 @@ class ApiService extends ApiConnection {
   async guestLogin(credentials) {
     const browserId = await this.getFingerprint();
     credentials.browserId = browserId;
-    console.log(credentials);
     try {
       const response = await this.post('/auth/guest-login', credentials);
       return response.data;
@@ -200,6 +199,22 @@ class ApiService extends ApiConnection {
   async deleteEvent(eventId) {
     try {
       const response = await this.get(`/event/${eventId}/delete`);
+      return response.data;
+    } catch (error) {
+      return error.response.data;
+    }
+  }
+
+  /**
+   * Fetches the details of an event by its ID.
+   *
+   * @param {string} eventId - The ID of the event to fetch.
+   * @returns {Promise<Object>} The response data from the server.
+   * @throws {Object} The error response data if the request fails.
+   */
+  async eventDetails(eventId) {
+    try {
+      const response = await this.get(`/event/${eventId}`);
       return response.data;
     } catch (error) {
       return error.response.data;

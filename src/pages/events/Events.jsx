@@ -1,12 +1,12 @@
-import React, { use, useEffect, useRef, useState } from 'react';
-import Header from '../header/Header';
-import EventCard from '../event/event_card/EventCard';
-import './Home.scss';
-import { useEvent } from '../../store/EventContext';
+import React, { useEffect, useState } from 'react';
+import './Events.scss';
+import Header from '../../components/header/Header';
+import EventCard from '../../components/event/event_card/EventCard';
 import socket from '../../services/socketService';
+import { useEvent } from '../../store/EventContext';
 
 /**
- * Home component that displays a list of events with filtering options.
+ * Events component that displays a list of events with filtering options.
  * 
  * This component fetches events and allows users to filter them by search text, category, and date.
  * It listens for real-time updates to events via a socket connection.
@@ -14,12 +14,12 @@ import socket from '../../services/socketService';
  * @component
  * @example
  * return (
- *   <Home />
+ *   <Events />
  * )
  * 
- * @returns {JSX.Element} The rendered Home component.
+ * @returns {JSX.Element} The rendered Events component.
  */
-function Home() {
+function Events() {
   const { events, getEvents } = useEvent();
   const [searchText, setSearchText] = useState('');
   const [filterData, setFilterData] = useState(events);
@@ -54,11 +54,13 @@ function Home() {
     if (category !== 'None') {
       filtered = filtered.filter(event => event.category === category);
     }
+    // filter the events to show the latest event first
+    filtered = [...filtered].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     setFilterData(filtered);
   }, [searchText, date, category, events]);
 
   return (
-    <div className="home-wrapper">
+    <div className="events-wrapper">
       <Header setSearchText={setSearchText} searchText={searchText} setCategory={setCategory} category={category} date={date} setDate={setDate} />
       {
         filterData.length === 0
@@ -76,4 +78,4 @@ function Home() {
   )
 }
 
-export default Home;
+export default Events;

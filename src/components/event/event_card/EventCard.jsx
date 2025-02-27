@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import './EventCard.scss';
-import customSnackBar from '../../snackbar/CustomSnackBar';
 import ApiConnection from '../../../connections/api_connection';
 import { Button, Tooltip } from '@mui/material';
 import { useAuth } from '../../../store/AuthContext';
-import apiServices from '../../../services/apiServices';
 import Confirmation from '../../Confirmation';
-import socket from '../../../services/socketService';
 import Spinner from 'react-bootstrap/Spinner';
+import { Link } from 'react-router-dom';
 
 /**
  * EventCard component renders a card with event details and provides options to join, leave, or delete the event.
@@ -22,7 +20,6 @@ function EventCard(props) {
   const { profileDetails, isLoggedIn } = useAuth();
   const apiConnection = new ApiConnection();
   const [cnfModalShow, setCnfModalShow] = useState(false);
-  const [delModalShow, setDelModalShow] = useState(false);
   const [loadingj, setLoadingj] = useState(false);
   const [loadingl, setLoadingl] = useState(false);
   const [loadingd, setLoadingd] = useState(false);
@@ -122,9 +119,9 @@ function EventCard(props) {
         {props.event?.name}
       </div>
       <div className="card-body">
-        <div className="description">
+        {/* <div className="description">
           {props.event?.description}
-        </div>
+        </div> */}
         <div className="location">
           <strong>Location: </strong>{props.event?.location}
         </div>
@@ -140,7 +137,7 @@ function EventCard(props) {
         </div>
         <div className="attendees">
           <span>
-            <strong>Attendees: </strong>{props.event?.attendees?.length}
+            <strong>Attendees: </strong>{props.event?.attendees?.length < 10 ? `0${props.event?.attendees?.length}` : props.event?.attendees?.length}
           </span>
         </div>
       </div>
@@ -156,18 +153,25 @@ function EventCard(props) {
               <Confirmation
                 title='Leave Event'
                 message='Are you sure you want to leave the event?'
-                onConfirm={leaveEvent}
+                onConfirm={() => leaveEvent(props.event, setLoadingl)}
                 show={cnfModalShow}
                 handleClose={() => setCnfModalShow(false)}
               />
             </>
             : <Tooltip title='Join the event' placement='top'>
-              <Button onClick={joinEvent} disabled={loadingj} style={{ backgroundColor: 'var(--primary-bt-color)'}}>
+              <Button onClick={() => joinEvent(props.event, setLoadingj)} disabled={loadingj} style={{ backgroundColor: 'var(--primary-bt-color)' }}>
                 {loadingj ? <Spinner animation="border" size='sm' className='me-2' /> : ''} Join
               </Button>
             </Tooltip>
         }
-        {
+        <Link to={`/events/${props.event?._id}`}>
+          <Tooltip title='View event details' placement='top'>
+            <Button style={{ backgroundColor: 'var(--green-color)' }}>
+              View
+            </Button>
+          </Tooltip>
+        </Link>
+        {/* {
           profileDetails?._id === props.event?.organizer &&
           <>
             <Tooltip title='Delete the event' placement='top'>
@@ -178,12 +182,13 @@ function EventCard(props) {
             <Confirmation
               title='Delete Event'
               message='Are you sure you want to delete the event?'
-              onConfirm={deleteEvent}
+              onConfirm={() => deleteEvent(props.event._id, setLoadingd)}
               show={delModalShow}
               handleClose={() => setDelModalShow(false)}
             />
           </>
-        }
+        } */}
+        
       </div>
     </div>
   )

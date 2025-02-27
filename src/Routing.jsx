@@ -1,16 +1,19 @@
 import React, { lazy, Suspense } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-const Loader = lazy(() => import('./loader/Loader'));
+const Loader = lazy(() => import('./components/loader/Loader'));
 const Layout = lazy(() => import('./Layout'));
-const Home = lazy(() => import('./home/Home'));
-const SignIn = lazy(() => import('./auth/signin/SignIn'));
-const SignUp = lazy(() => import('./auth/signup/SignUp'));
-const ForgotPassword = lazy(() => import('./auth/forgot_password/ForgotPassword'));
-const ProtectedRoute = lazy(() => import('../guard/ProtectedRoute'));
-const GuestRoute = lazy(() => import('../guard/GuestRoute'));
-const Verification = lazy(() => import('./auth/verification/Verification'));
-const CreateEvent = lazy(() => import('./event/create_event/CreateEvent'));
+const SignIn = lazy(() => import('./components/auth/signin/SignIn'));
+const SignUp = lazy(() => import('./components/auth/signup/SignUp'));
+const ForgotPassword = lazy(() => import('./components/auth/forgot_password/ForgotPassword'));
+const ProtectedRoute = lazy(() => import('./guard/ProtectedRoute'));
+const GuestRoute = lazy(() => import('./guard/GuestRoute'));
+const Verification = lazy(() => import('./components/auth/verification/Verification'));
+const CreateEvent = lazy(() => import('./components/event/create_event/CreateEvent'));
+const EventDetails = lazy(() => import('./components/event/event_details/EventDetails'));
+const Events = lazy(() => import('./pages/events/Events'));
+const Home = lazy(() => import('./pages/home/Home'));
+const NotFound = lazy(() => import('./pages/not_found/NotFound'));
 
 const router = createBrowserRouter([
   {
@@ -26,6 +29,22 @@ const router = createBrowserRouter([
         element: (
           <Suspense fallback={<Loader />}>
             <Home />
+          </Suspense>
+        )
+      },
+      {
+        path: '/events',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <Events />
+          </Suspense>
+        )
+      },
+      {
+        path: '/events/:eventId',
+        element: (
+          <Suspense fallback={<Loader />}>
+            <EventDetails />
           </Suspense>
         )
       },
@@ -93,6 +112,14 @@ const router = createBrowserRouter([
       },
     ]
   },
+  {
+    path: '*',
+    element: (
+      <Suspense fallback={<Loader />}>
+        <NotFound />
+      </Suspense>
+    )
+  }
 ]);
 
 function Routing() {

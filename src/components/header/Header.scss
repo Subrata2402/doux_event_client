@@ -82,32 +82,6 @@
 
 }
 
-
-.MuiPaper-root.MuiPickersPopper-paper,
-.MuiPickersLayout-root {
-  background-color: var(--bg-color) !important;
-  border: 1px solid var(--border-color) !important;
-  border-radius: 1rem !important;
-}
-
-.MuiButtonBase-root.MuiPickersDay-root:not(.Mui-selected) {
-  border-color: var(--border-color) !important;
-  color: var(--text-color);
-}
-
-.MuiButtonBase-root.MuiPickersDay-root.Mui-selected {
-  color: var(--bg-color) !important;
-}
-
-.MuiButtonBase-root.MuiPickersDay-root,
-.MuiTypography-root.MuiDayCalendar-weekDayLabel,
-.MuiButtonBase-root.MuiIconButton-root.MuiPickersArrowSwitcher-button,
-.MuiButtonBase-root.MuiIconButton-root.MuiPickersArrowSwitcher-button,
-.MuiButtonBase-root.MuiIconButton-root.MuiPickersCalendarHeader-switchViewButton,
-.MuiButtonBase-root.MuiIconButton-root.MuiPickersCalendarHeader-switchViewButton {
-  color: var(--text-color) !important;
-}
-
 .filter-event {
   display: flex;
   align-items: center;
@@ -149,6 +123,10 @@
 
     .MuiInputBase-root.MuiOutlinedInput-root, .MuiOutlinedInput-notchedOutline {
       border: none;
+    }
+
+    .MuiInputBase-root.MuiOutlinedInput-root {
+      width: 100%;
     }
   }
 }

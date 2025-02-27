@@ -4,7 +4,7 @@ import { PiSignInBold } from "react-icons/pi";
 import { GoHome } from "react-icons/go";
 import { GoHomeFill } from "react-icons/go";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { MdLightMode, MdDarkMode, MdLogout } from "react-icons/md";
+import { MdLightMode, MdDarkMode, MdLogout, MdOutlineEmojiEvents, MdEmojiEvents } from "react-icons/md";
 import { useTheme } from '../../store/ThemeContext';
 import { IconButton, Tooltip } from '@mui/material';
 import { useAuth } from '../../store/AuthContext';
@@ -64,16 +64,29 @@ function SideBar() {
       <div className="devider"></div>
       <div className="sidebar-items">
         <Link
-          className={`sidebar-item ${(location.pathname === '/' || location.pathname === '/add-notes' ? 'active' : '')}`}
+          className={`sidebar-item ${(location.pathname === '/' ? 'active' : '')}`}
           to='/'
         >
           {
-            location.pathname === '/' || location.pathname === '/add-notes'
+            location.pathname === '/'
               ? <GoHomeFill color='var(--nav-item-color)' className='icon' />
               : <GoHome color='var(--nav-item-color)' className='icon' />
           }
           <div className="text">
             Home
+          </div>
+        </Link>
+        <Link
+          className={`sidebar-item ${(location.pathname.includes('/events') ? 'active' : '')}`}
+          to='/events'
+        >
+          {
+            location.pathname.includes('/events')
+              ? <MdEmojiEvents color='var(--nav-item-color)' className='icon' />
+              : <MdOutlineEmojiEvents color='var(--nav-item-color)' className='icon' />
+          }
+          <div className="text">
+            Events
           </div>
         </Link>
         <Link
