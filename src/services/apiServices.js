@@ -46,7 +46,6 @@ class ApiService extends ApiConnection {
   async guestLogin(credentials) {
     const browserId = await this.getFingerprint();
     credentials.browserId = browserId;
-    console.log(credentials);
     try {
       const response = await this.post('/auth/guest-login', credentials);
       return response.data;
