@@ -121,7 +121,7 @@ function SideBar() {
         {
           isLoggedIn ?
             <>
-              <div className="profile-avatar" onClick={handleClick}>{profileDetails.name[0]}</div>
+              <div className="profile-avatar" onClick={handleClick}>{profileDetails.name[0]?.toUpperCase()}</div>
               <StyledMenu
                 anchorEl={anchorEl}
                 open={open}
@@ -132,7 +132,9 @@ function SideBar() {
                 onMenuItemClick={() => setShowModal(true)}
                 width="15rem"
               />
-              <div className="profile-name">{profileDetails.name}</div>
+              <Tooltip title={profileDetails.name} placement='top'>
+                <div className="profile-name">{profileDetails.name}</div>
+              </Tooltip>
               <div className="arrow-icon">
                 <Tooltip title='Logout' placement='top'>
                   <IconButton onClick={() => setShowModal(true)}>
