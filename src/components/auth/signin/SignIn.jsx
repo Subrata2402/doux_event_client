@@ -16,7 +16,7 @@ function SignIn() {
     password: ''
   });
   const [showPassword, setShowPassword] = useState(false);
-  // const [rememberMe, setRememberMe] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
   const [loadingl, setLoadingl] = useState(false);
   const [loadingg, setLoadingg] = useState(false);
   const passwordInput = useRef(null);
@@ -115,7 +115,7 @@ function SignIn() {
               </IconButton>
             </div>
           </div>
-          {/* <div className="rf-section">
+          <div className="rf-section">
             <FormControlLabel
               control={
                 <Checkbox
@@ -131,7 +131,7 @@ function SignIn() {
                 Forgot Password?
               </Button>
             </Link>
-          </div> */}
+          </div>
           <div className="buttons">
             <Button
               variant='contained'

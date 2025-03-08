@@ -90,6 +90,7 @@ class ApiService extends ApiConnection {
       const response = await this.post('/auth/verify-email', data);
       return response.data;
     } catch (error) {
+      console.log(error);
       return error.response.data;
     }
   }
@@ -102,9 +103,28 @@ class ApiService extends ApiConnection {
    * @returns {Promise<Object>} The response data from the server.
    * @throws {Object} The error response data if the request fails.
    */
-  async resendOtp(data) {
+  async sendOtp(data) {
     try {
-      const response = await this.post('/auth/resend-otp', data);
+      const response = await this.post('/auth/send-otp', data);
+      return response.data;
+    } catch (error) {
+      return error.response.data;
+    }
+  }
+
+  /**
+   * Sends a request to reset the user's password.
+   * 
+   * @param {Object} data - The data to be sent in the request body.
+   * @param {string} data.email - The email address of the user.
+   * @param {string} data.password - The new password for the user.
+   * @param {string} data.cpassword - The confirm password for the user.
+   * @returns {Promise<Object>} The response data from the server.
+   * @throws {Object} The error response data if the request fails.
+   */
+  async resetPassword(data) {
+    try {
+      const response = await this.post('/auth/reset-password', data);
       return response.data;
     } catch (error) {
       return error.response.data;
