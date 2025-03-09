@@ -20,6 +20,17 @@ function ForgotPassword() {
   const intervalId = useRef(null);
   const navigate = useNavigate();
 
+  /**
+   * Handles the submission of the form.
+   * Sets the loading state to true, sends a request to the API, and handles the response.
+   * If the request is successful, updates the wrapper state and shows a success message.
+   * If the request fails, shows an error message.
+   * Finally, sets the loading state to false.
+   * 
+   * @async
+   * @function handleSubmit
+   * @returns {Promise<void>}
+   */
   const handleSubmit = async () => {
     setLoading(true);
     if (wrapper === 'verify') {
@@ -54,6 +65,11 @@ function ForgotPassword() {
     setLoading(false);
   }
 
+  /**
+   * Starts a countdown timer for 30 seconds.
+   * Disables the resend button and updates the timer state every second.
+   * After 31 seconds, clears the interval and enables the resend button.
+   */
   const startTimer = () => {
     setResend(false);
     setTimer(30);
@@ -66,10 +82,24 @@ function ForgotPassword() {
     }, 31000);
   }
 
+  /**
+   * Stops the timer by clearing the interval using the stored interval ID.
+   */
   const stopTimer = () => {
     clearInterval(intervalId.current);
   }
 
+  /**
+   * Handles the resend OTP action.
+   * Sets the loading state to true, sends an OTP request, and handles the response.
+   * If the request is successful, starts the timer and shows a success message.
+   * If the request fails, shows an error message.
+   * Finally, sets the loading state to false.
+   * 
+   * @async
+   * @function handleResend
+   * @returns {Promise<void>}
+   */
   const handleResend = async () => {
     setLoadingr(true);
     const response = await apiServices.sendOtp({ email });
@@ -82,6 +112,10 @@ function ForgotPassword() {
     setLoadingr(false);
   }
 
+  /**
+   * Handles the action to edit the email.
+   * Sets the wrapper state to 'forgot' and stops the timer.
+   */
   const editEmail = () => {
     setWrapper('forgot');
     stopTimer();

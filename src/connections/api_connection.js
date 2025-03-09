@@ -10,6 +10,15 @@ class ApiConnection {
     });
   }
 
+  /**
+   * Retrieves the authentication token from localStorage or sessionStorage.
+   *
+   * @returns {string|null} The token if found, otherwise null.
+   */
+  getToken() {
+    const token = localStorage.getItem('accessToken') || sessionStorage.getItem('accessToken');
+    return token;
+  }
 
   /**
    * Sends a GET request to the specified endpoint with an authorization header.
@@ -20,7 +29,7 @@ class ApiConnection {
   async get(endpoint) {
     return this.axios.get(endpoint, {
       headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
+        'Authorization': `Bearer ${this.getToken()}`
       }
     });
   }
@@ -35,7 +44,7 @@ class ApiConnection {
   async post(endpoint, data) {
     return this.axios.post(endpoint, data, {
       headers: {
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
+        'Authorization': `Bearer ${this.getToken()}`
       }
     });
   }
@@ -51,7 +60,7 @@ class ApiConnection {
     return this.axios.post(endpoint, data, {
       headers: {
         'Content-Type': 'multipart/form-data',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
+        'Authorization': `Bearer ${this.getToken()}`
       }
     });
   }

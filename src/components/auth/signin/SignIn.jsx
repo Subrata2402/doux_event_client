@@ -43,7 +43,7 @@ function SignIn() {
       }
       if (response.success) {
         navigate('/');
-        storeToken(response.data?.accessToken);
+        storeToken(response.data?.accessToken, rememberMe);
         setProfileDetails(response.data?.user);
         customSnackBar(response.message);
       } else {

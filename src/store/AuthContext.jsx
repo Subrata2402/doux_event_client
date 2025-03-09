@@ -9,8 +9,15 @@ const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [profileDetails, setProfileDetails] = useState({});
 
-  const storeToken = (token) => {
-    localStorage.setItem('token', token);
+  /**
+   * Stores the access token in either localStorage or sessionStorage based on the rememberMe flag.
+   * Also sets the isLoggedIn state to true.
+   *
+   * @param {string} token - The access token to be stored.
+   * @param {boolean} rememberMe - If true, the token is stored in localStorage; otherwise, it is stored in sessionStorage.
+   */
+  const storeToken = (token, rememberMe) => {
+    rememberMe ? localStorage.setItem('accessToken', token) : sessionStorage.setItem('accessToken', token);
     setIsLoggedIn(true);
   }
 
@@ -39,7 +46,7 @@ const AuthProvider = ({ children }) => {
   }
 
   useEffect(() => {
-      fetchProfileDetails().then(() => setLoading(false));
+    fetchProfileDetails().then(() => setLoading(false));
   }, []);
 
   return (
