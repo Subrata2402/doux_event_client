@@ -118,7 +118,11 @@ function EventDetails() {
             event?.attendees?.some(attendee => attendee._id?.toString() === profileDetails?._id?.toString()) ?
               <>
                 <Tooltip title='Leave the event' placement='top'>
-                  <Button onClick={() => setCnfModalShow(true)} disabled={loadingl}>
+                  <Button
+                    onClick={() => setCnfModalShow(true)}
+                    disabled={loadingl}
+                    className={loadingl ? 'disabled' : ''}
+                  >
                     {loadingl ? <Spinner animation="border" size='sm' className='me-2' /> : ''} Leave
                   </Button>
                 </Tooltip>
@@ -131,7 +135,12 @@ function EventDetails() {
                 />
               </>
               : <Tooltip title='Join the event' placement='top'>
-                <Button onClick={() => joinEvent(event, setLoadingj)} disabled={loadingj} style={{ backgroundColor: 'var(--primary-bt-color)' }}>
+                <Button
+                  onClick={() => joinEvent(event, setLoadingj)}
+                  disabled={loadingj}
+                  style={{ backgroundColor: 'var(--primary-bt-color)' }}
+                  className={loadingj ? 'disabled' : ''}
+                >
                   {loadingj ? <Spinner animation="border" size='sm' className='me-2' /> : ''} Join
                 </Button>
               </Tooltip>
@@ -140,7 +149,11 @@ function EventDetails() {
             profileDetails?._id === event?.organizer._id &&
             <>
               <Tooltip title='Delete the event' placement='top'>
-                <Button className='bg-danger' onClick={() => setDelModalShow(true)} disabled={loadingd}>
+                <Button
+                  className={`bg-danger ${loadingd ? 'disabled' : ''}`}
+                  onClick={() => setDelModalShow(true)}
+                  disabled={loadingd}
+                >
                   {loadingd ? <Spinner animation="border" size='sm' className='me-2' /> : ''} Delete
                 </Button>
               </Tooltip>

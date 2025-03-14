@@ -111,9 +111,7 @@ function EventForm(props) {
         </div>
         <div className="create-button">
           <Button
-            variant='contained'
-            color='primary'
-            className='w-100'
+            className={props.loading ? 'disabled' : ''}
             disabled={props.loading}
             onClick={props.handleSubmit}
           >

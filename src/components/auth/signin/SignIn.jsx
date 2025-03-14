@@ -127,7 +127,7 @@ function SignIn() {
               label="Remember me"
             />
             <Link to='/auth/signin/forgot-password'>
-              <Button>
+              <Button className='forgot-password'>
                 Forgot Password?
               </Button>
             </Link>
@@ -135,7 +135,7 @@ function SignIn() {
           <div className="buttons">
             <Button
               variant='contained'
-              className='submit-button'
+              className={`submit-button ${loadingl || loadingg ? 'disabled' : ''}`}
               disabled={loadingl || loadingg}
               onClick={() => handleSubmit(false)}
             >
@@ -148,7 +148,7 @@ function SignIn() {
             </div>
             <Button
               variant='contained'
-              className='submit-button'
+              className={`submit-button ${loadingl || loadingg ? 'disabled' : ''}`}
               disabled={loadingl || loadingg}
               onClick={() => handleSubmit(true)}
             >

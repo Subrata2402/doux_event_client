@@ -68,7 +68,12 @@ function Verification() {
                 />
               </div>
               <div className="submit-button">
-                <Button color="primary" onClick={verifyEmail} disabled={loading}>
+                <Button
+                  color="primary"
+                  className={loading ? 'disabled' : ''}
+                  onClick={verifyEmail}
+                  disabled={loading}
+                >
                   {loading ? <Spinner animation="border" size='sm' className='me-2' /> : ''}Verify
                 </Button>
               </div>

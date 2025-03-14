@@ -61,7 +61,11 @@ function EventCard(props) {
           props.event?.attendees?.includes(profileDetails?._id) ?
             <>
               <Tooltip title='Leave the event' placement='top'>
-                <Button onClick={() => setCnfModalShow(true)} disabled={loadingl}>
+                <Button
+                  onClick={() => setCnfModalShow(true)}
+                  disabled={loadingl}
+                  className={loadingl ? 'disabled' : ''}
+                >
                   {loadingl ? <Spinner animation="border" size='sm' className='me-2' /> : ''} Leave
                 </Button>
               </Tooltip>
@@ -74,7 +78,12 @@ function EventCard(props) {
               />
             </>
             : <Tooltip title='Join the event' placement='top'>
-              <Button onClick={() => joinEvent(props.event, setLoadingj)} disabled={loadingj} style={{ backgroundColor: 'var(--primary-bt-color)' }}>
+              <Button
+                onClick={() => joinEvent(props.event, setLoadingj)}
+                disabled={loadingj}
+                style={{ backgroundColor: 'var(--primary-bt-color)' }}
+                className={loadingj ? 'disabled' : ''}
+              >
                 {loadingj ? <Spinner animation="border" size='sm' className='me-2' /> : ''} Join
               </Button>
             </Tooltip>
@@ -86,24 +95,7 @@ function EventCard(props) {
             </Button>
           </Tooltip>
         </Link>
-        {/* {
-          profileDetails?._id === props.event?.organizer &&
-          <>
-            <Tooltip title='Delete the event' placement='top'>
-              <Button className='bg-danger' onClick={() => setDelModalShow(true)} disabled={loadingd}>
-                {loadingd ? <Spinner animation="border" size='sm' className='me-2' /> : ''} Delete
-              </Button>
-            </Tooltip>
-            <Confirmation
-              title='Delete Event'
-              message='Are you sure you want to delete the event?'
-              onConfirm={() => deleteEvent(props.event._id, setLoadingd)}
-              show={delModalShow}
-              handleClose={() => setDelModalShow(false)}
-            />
-          </>
-        } */}
-        
+
       </div>
     </div>
   )

@@ -146,7 +146,8 @@ function SignUp() {
           </div>
           <Button
             variant='contained'
-            className='submit-button'
+            className={`submit-button ${loading ? 'disabled' : ''}`}
+            disabled={loading}
             onClick={handleSubmit}
           >
             {loading ? <Spinner animation="border" size='sm' className='me-2' /> : ''}Sign Up

@@ -2,8 +2,8 @@ import axios from 'axios';
 
 class ApiConnection {
   constructor() {
-    this.baseUrl = 'http://192.168.0.103:3250';
-    // this.baseUrl = 'https://doux-event.debdevcs.org';
+    // this.baseUrl = 'http://192.168.0.103:3250';
+    this.baseUrl = 'https://doux-event.debdevcs.org';
     this.apiUrl = `${this.baseUrl}/api`;
     this.axios = axios.create({
       baseURL: this.apiUrl,
