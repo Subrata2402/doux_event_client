@@ -10,6 +10,8 @@ import Spinner from 'react-bootstrap/esm/Spinner';
 import CustomDatePicker from '../../../custom/date_picker/CustomDatePicker';
 import CustomTimePicker from '../../../custom/time_picker/CustomTimePicker';
 import CustomDropDown from '../../../custom/drop_down/CustomDropDown';
+import { categories } from '../../../utils/data';
+import EventForm from '../event_form/EventForm';
 
 /**
  * CreateEvent component allows users to create a new event by filling out a form.
@@ -35,21 +37,6 @@ function CreateEvent() {
     'event-image': ''
   });
   const [loading, setLoading] = useState(false);
-
-  const categories = [
-    'Music',
-    'Sports',
-    'Food',
-    'Travel',
-    'Education',
-    'Business',
-    'Health',
-    'Fashion',
-    'Technology',
-    'Art',
-    'Science',
-    'Other'
-  ];
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -113,91 +100,15 @@ function CreateEvent() {
         <div className="header">
           <h2 className="form-title m-0">Create Event</h2>
         </div>
-        <div className="event-form">
-          <div className="row m-0 p-0">
-            <div className="row m-0 p-0 mb-3 align-items-center">
-              <label htmlFor="event-name" className='col-sm-4'> Name <span>*</span></label>
-              <input
-                type="text"
-                name='event-name'
-                id='event-name'
-                className='col-sm-8'
-                onChange={(e) => setEventData({ ...eventData, name: e.target.value })}
-                value={eventData.name}
-                placeholder='Enter event name'
-              />
-            </div>
-            <div className="row m-0 p-0 mb-3 align-items-center">
-              <label htmlFor="event-date" className='col-sm-4'> Date <span>*</span></label>
-              <div className="col-sm-8 p-0">
-                <CustomDatePicker date={eventData.date} setDate={(date) => setEventData({ ...eventData, date })} width='100%' />
-              </div>
-            </div>
-            <div className="row m-0 p-0 mb-3 align-items-center">
-              <label htmlFor="event-time" className='col-sm-4'> Time <span>*</span></label>
-              <div className="col-sm-8 p-0">
-                <CustomTimePicker value={eventData.time} setValue={(time) => setEventData({ ...eventData, time })} />
-              </div>
-            </div>
-            <div className="row m-0 p-0 mb-3 align-items-center">
-              <label htmlFor="event-location" className='col-sm-4'> Location <span>*</span></label>
-              <input
-                type="text"
-                name='event-location'
-                id='event-location'
-                className='col-sm-8'
-                onChange={(e) => setEventData({ ...eventData, location: e.target.value })}
-                value={eventData.location}
-                placeholder='Enter event location'
-              />
-            </div>
-            <div className="row m-0 p-0 mb-3 align-items-center">
-              <label htmlFor="event-location" className='col-sm-4'> Category <span>*</span></label>
-              <div className="col-sm-8 p-0">
-                <CustomDropDown items={categories} value={eventData.category} setValue={(value) => setEventData({ ...eventData, category: value })} placeholder='Select Category' />
-              </div>
-            </div>
-            <div className="row m-0 p-0 mb-3 align-items-start">
-              <label htmlFor="event-description" className='col-sm-4'> Description <span>*</span></label>
-              <textarea
-                name="event-description"
-                id="event-description"
-                cols="30"
-                rows="5"
-                className='col-sm-8'
-                onChange={(e) => setEventData({ ...eventData, description: e.target.value })}
-                value={eventData.description}
-                placeholder='Enter event description'
-              >
-              </textarea>
-            </div>
-            <div className="row m-0 p-0 mb-3 align-items-center">
-              <label htmlFor="event-image" className='col-sm-4'> Image <span>*</span></label>
-              <div className="file-upload col-sm-8">
-                <label htmlFor="event-image" className="file-upload-button">Choose File</label>
-                <input
-                  type="file"
-                  name='event-image'
-                  id='event-image'
-                  onChange={handleFileChange}
-                  accept='image/*'
-                />
-                <span className="file-name">{fileName || 'No file chosen'}</span>
-              </div>
-            </div>
-            <div className="create-button">
-              <Button
-                variant='contained'
-                color='primary'
-                className='w-100'
-                disabled={loading}
-                onClick={createEvent}
-              >
-                {loading ? <Spinner animation="border" size='md' className='me-2' /> : ""}Create Event
-              </Button>
-            </div>
-          </div>
-        </div>
+        <EventForm
+          eventData={eventData}
+          setEventData={setEventData}
+          fileName={fileName}
+          handleFileChange={handleFileChange}
+          loading={loading}
+          handleSubmit={createEvent}
+          buttonName='Create Event'
+        />
       </div>
 
     </div>

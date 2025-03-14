@@ -13,6 +13,8 @@ import { useEvent } from '../../../store/EventContext';
 import socket from '../../../services/socketService';
 import Modal from 'react-bootstrap/Modal';
 import { FaArrowCircleLeft } from 'react-icons/fa';
+import { FiEdit } from "react-icons/fi";
+import EditEvent from '../edit_event/EditEvent';
 
 function EventDetails() {
   const { eventId } = useParams();
@@ -27,6 +29,7 @@ function EventDetails() {
   const [cnfModalShow, setCnfModalShow] = useState(false);
   const [delModalShow, setDelModalShow] = useState(false);
   const [show, setShow] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const fetchEventDetails = async () => {
     setLoading(true);
@@ -97,8 +100,18 @@ function EventDetails() {
         <img src={`${apiConnection.baseUrl}/images/${event.image}`} alt={event.title} />
       </div>
       <div className="event-details">
-        <div className="event-name">
+        <div className="event-name home-back">
           {event.name}
+          {/* <Tooltip title='Edit event' placement='top'>
+            <IconButton className='view-image' onClick={() => setShowModal(true)}>
+              <FiEdit size={25} color='var(--text-color)' />
+            </IconButton>
+          </Tooltip>
+          <EditEvent
+            show={showModal}
+            onHide={() => setShowModal(false)}
+            event={event}
+          /> */}
         </div>
         <div className="action-buttons d-flex gap-3">
           {

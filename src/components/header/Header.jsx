@@ -1,4 +1,4 @@
-  import React, { useState } from 'react';
+import React, { useState } from 'react';
 import { BiSearchAlt } from "react-icons/bi";
 import { MdClear } from "react-icons/md";
 import './Header.scss';
@@ -6,6 +6,7 @@ import { IconButton } from '@mui/material';
 import StyledMenu from '../menu/StyledMenu';
 import { BiCategory } from "react-icons/bi";
 import CustomDatePicker from '../../custom/date_picker/CustomDatePicker';
+import { categories } from '../../utils/data';
 
 /**
  * Header component for displaying a search bar and filter options.
@@ -33,21 +34,7 @@ function Header(props) {
     setAnchorEl(null);
   };
 
-  const [menuList, setMenuList] = useState([
-    { text: 'None', isSelected: true },
-    { text: 'Technology', isSelected: false },
-    { text: 'Music', isSelected: false },
-    { text: 'Travel', isSelected: false },
-    { text: 'Food', isSelected: false },
-    { text: 'Health', isSelected: false },
-    { text: 'Sports', isSelected: false },
-    { text: 'Fashion', isSelected: false },
-    { text: 'Education', isSelected: false },
-    { text: 'Business', isSelected: false },
-    { text: 'Art', isSelected: false },
-    { text: 'Science', isSelected: false },
-    { text: 'Other', isSelected: false },
-  ]);
+  const [menuList, setMenuList] = useState(categories);
 
   /**
    * Handles the click event on a menu item.

@@ -1,0 +1,104 @@
+.event-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  border: 1px solid var(--border-color);
+
+  label {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--text-color);
+    font-weight: 600;
+    margin: 0 !important;
+    padding: 0 !important;
+    margin-bottom: 0.2rem !important;
+  }
+
+  input:not(.MuiInputBase-input),
+  textarea {
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 4  00;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    color: var(--text-color);
+    outline: none;
+    background-color: transparent;
+  }
+
+  select {
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    color: var(--text-color);
+    outline: none;
+    background-color: transparent;
+  }
+
+  input[type="file"] {
+    display: none;
+  }
+
+  .file-upload {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+
+    .file-upload-button {
+      padding: 0.5rem 1rem !important;
+      border: 1px solid var(--border-color);
+      border-radius: 0.5rem;
+      color: var(--text-color);
+      cursor: pointer;
+    }
+
+    .file-name {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: var(--text-color);
+    }
+  }
+
+  .MuiBox-root {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+  }
+
+  .MuiInputBase-root.MuiOutlinedInput-root {
+    border-radius: 0.5rem;
+    color: var(--text-color);
+    width: 100%;
+  }
+
+  .MuiOutlinedInput-notchedOutline {
+    border-color: var(--border-color) !important;
+  }
+
+  .create-button {
+    width: auto;
+    padding: 0;
+    margin: 0 0 0 auto;
+
+    button {
+      width: fit-content;
+      padding: 0.5rem 1rem;
+      text-transform: none;
+      font-size: 1.5rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 0.5rem;
+      background-color: var(--button-color);
+      color: var(--button-text-color);
+      cursor: pointer;
+      outline: none;
+    }
+  }
+}

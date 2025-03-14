@@ -47,7 +47,8 @@ function SideBar() {
    * 5. Closes any open dialogs or menus.
    */
   const handleLogout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('accessToken');
+    sessionStorage.removeItem('accessToken');
     setIsLoggedIn(false);
     setProfileDetails({});
     navigate('/auth/signin');

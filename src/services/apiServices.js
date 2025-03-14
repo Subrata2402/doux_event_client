@@ -8,8 +8,7 @@ class ApiService extends ApiConnection {
 
   /**
    * Asynchronously retrieves the visitor's fingerprint ID.
-   * 
-   * @returns {Promise<string>} A promise that resolves to the visitor's fingerprint ID.
+   * @returns {Promise<string>} Visitor's fingerprint ID.
    */
   async getFingerprint() {
     const fp = await FingerprintJS.load();
@@ -18,227 +17,78 @@ class ApiService extends ApiConnection {
   }
 
   /**
-   * Logs in a user with the provided credentials.
-   *
-   * @param {Object} credentials - The user's login credentials.
-   * @param {string} credentials.email - The user's email.
-   * @param {string} credentials.password - The user's password.
-   * @returns {Promise<Object>} The response data from the login request.
-   * @throws {Object} The error response data if the login request fails.
+   * Generic method to handle API requests and errors
+   * @param {Function} requestFn - The request function to execute
+   * @returns {Promise<Object>} Response data or error
+   */
+  async handleRequest(requestFn) {
+    try {
+      const response = await requestFn();
+      return response.data;
+    } catch (error) {
+      return error.response?.data || error;
+    }
+  }
+
+  /**
+   * Auth-related API calls
    */
   async login(credentials) {
-    const browserId = await this.getFingerprint();
-    credentials.browserId = browserId;
-    try {
-      const response = await this.post('/auth/login', credentials);
-      return response.data;
-    } catch (error) {
-      return error.response.data;
-    }
+    return this.handleRequest(() => this.post('/auth/login', credentials));
   }
 
-  /**
-   * Logs in a guest user using the provided credentials.
-   *
-   * @param {Object} credentials - The credentials for guest login.
-   * @returns {Promise<Object>} The response data from the guest login request.
-   */
   async guestLogin(credentials) {
     const browserId = await this.getFingerprint();
-    credentials.browserId = browserId;
-    try {
-      const response = await this.post('/auth/guest-login', credentials);
-      return response.data;
-    } catch (error) {
-      return error.response.data;
-    }
+    return this.handleRequest(() => 
+      this.post('/auth/guest-login', { ...credentials, browserId })
+    );
   }
 
-  /**
-   * Registers a new user with the provided user data.
-   *
-   * @param {Object} userData - The data of the user to register.
-   * @param {string} userData.name - The name of the user.
-   * @param {string} userData.email - The email of the user.
-   * @param {string} userData.password - The password of the user.
-   * @param {string} userData.cpassword - The confirm password of the user.
-   * @returns {Promise<Object>} The response data from the registration request.
-   * @throws {Object} The error response data if the registration request fails.
-   */
   async register(userData) {
-    const browserId = await this.getFingerprint();
-    userData.browserId = browserId;
-    try {
-      const response = await this.post('/auth/register', userData);
-      return response.data;
-    } catch (error) {
-      return error.response.data;
-    }
+    return this.handleRequest(() => this.post('/auth/register', userData));
   }
 
-  /**
-   * Verifies the user's email by sending a POST request to the server.
-   *
-   * @param {Object} data - The data to be sent in the request body.
-   * @param {string} data.email - The email address to be verified.
-   * @param {string} data.otp - The OTP to verify the email.
-   * @returns {Promise<Object>} The response data from the server.
-   * @throws {Object} The error response data if the request fails.
-   */
   async verifyEmail(data) {
-    try {
-      const response = await this.post('/auth/verify-email', data);
-      return response.data;
-    } catch (error) {
-      console.log(error);
-      return error.response.data;
-    }
+    return this.handleRequest(() => this.post('/auth/verify-email', data));
   }
 
-  /**
-   * Resends the OTP (One-Time Password) to the user.
-   *
-   * @param {Object} data - The data to be sent in the request body.
-   * @param {string} data.email - The email address of the user.
-   * @returns {Promise<Object>} The response data from the server.
-   * @throws {Object} The error response data if the request fails.
-   */
   async sendOtp(data) {
-    try {
-      const response = await this.post('/auth/send-otp', data);
-      return response.data;
-    } catch (error) {
-      return error.response.data;
-    }
+    return this.handleRequest(() => this.post('/auth/send-otp', data));
   }
 
-  /**
-   * Sends a request to reset the user's password.
-   * 
-   * @param {Object} data - The data to be sent in the request body.
-   * @param {string} data.email - The email address of the user.
-   * @param {string} data.password - The new password for the user.
-   * @param {string} data.cpassword - The confirm password for the user.
-   * @returns {Promise<Object>} The response data from the server.
-   * @throws {Object} The error response data if the request fails.
-   */
   async resetPassword(data) {
-    try {
-      const response = await this.post('/auth/reset-password', data);
-      return response.data;
-    } catch (error) {
-      return error.response.data;
-    }
+    return this.handleRequest(() => this.post('/auth/reset-password', data));
   }
 
-  /**
-   * Fetches the profile details of the authenticated user.
-   *
-   * @returns {Promise<Object>} A promise that resolves to the profile details data.
-   * @throws {Object} An error object containing the response data if the request fails.
-   */
   async profileDetails() {
-    try {
-      const response = await this.get('/auth/profile-details');
-      return response.data;
-    } catch (error) {
-      return error.response.data;
-    }
+    return this.handleRequest(() => this.get('/auth/profile-details'));
   }
 
   /**
-   * Creates a new event by sending a POST request with the provided data.
-   *
-   * @param {Object} data - The data for the new event.
-   * @returns {Promise<Object>} The response data from the server.
-   * @throws {Object} The error response data if the request fails.
+   * Event-related API calls
    */
   async createEvent(data) {
-    try {
-      const response = await this.formDataPost('/event/create-event', data);
-      return response.data;
-    } catch (error) {
-      return error.response.data;
-    }
+    return this.handleRequest(() => this.formDataPost('/event/create-event', data));
   }
 
-  /**
-   * Fetches the list of events from the server.
-   *
-   * @returns {Promise<Object>} A promise that resolves to the response data containing the list of events.
-   * @throws {Object} The error response data if the request fails.
-   */
   async eventList() {
-    try {
-      const response = await this.get('/event/list');
-      return response.data;
-    } catch (error) {
-      return error.response.data;
-    }
+    return this.handleRequest(() => this.get('/event/list'));
   }
 
-  /**
-   * Joins an event by its ID.
-   *
-   * @param {string} eventId - The ID of the event to join.
-   * @returns {Promise<Object>} The response data from the server.
-   * @throws {Object} The error response data if the request fails.
-   */
-  async joinEvent(eventId) {
-    try {
-      const response = await this.get(`/event/${eventId}/join`);
-      return response.data;
-    } catch (error) {
-      return error.response.data;
-    }
-  }
-
-  /**
-   * Sends a request to leave an event.
-   *
-   * @param {string} eventId - The ID of the event to leave.
-   * @returns {Promise<Object>} The response data from the server.
-   * @throws {Object} The error response data if the request fails.
-   */
-  async leaveEvent(eventId) {
-    try {
-      const response = await this.get(`/event/${eventId}/leave`);
-      return response.data;
-    } catch (error) {
-      return error.response.data;
-    }
-  }
-
-  /**
-   * Deletes an event by its ID.
-   *
-   * @param {string} eventId - The ID of the event to delete.
-   * @returns {Promise<Object>} The response data from the API.
-   * @throws {Object} The error response data if the request fails.
-   */
-  async deleteEvent(eventId) {
-    try {
-      const response = await this.get(`/event/${eventId}/delete`);
-      return response.data;
-    } catch (error) {
-      return error.response.data;
-    }
-  }
-
-  /**
-   * Fetches the details of an event by its ID.
-   *
-   * @param {string} eventId - The ID of the event to fetch.
-   * @returns {Promise<Object>} The response data from the server.
-   * @throws {Object} The error response data if the request fails.
-   */
   async eventDetails(eventId) {
-    try {
-      const response = await this.get(`/event/${eventId}`);
-      return response.data;
-    } catch (error) {
-      return error.response.data;
-    }
+    return this.handleRequest(() => this.get(`/event/${eventId}`));
+  }
+
+  async joinEvent(eventId) {
+    return this.handleRequest(() => this.get(`/event/${eventId}/join`));
+  }
+
+  async leaveEvent(eventId) {
+    return this.handleRequest(() => this.get(`/event/${eventId}/leave`));
+  }
+
+  async deleteEvent(eventId) {
+    return this.handleRequest(() => this.get(`/event/${eventId}/delete`));
   }
 }
 

@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import './ForgotPassword.scss';
-import { Button, IconButton } from '@mui/material';
+import { Button, IconButton, Tooltip } from '@mui/material';
 import { MdEdit } from 'react-icons/md';
 import apiServices from '../../../services/apiServices';
 import customSnackBar from '../../snackbar/CustomSnackBar';
@@ -146,9 +146,11 @@ function ForgotPassword() {
             wrapper === 'verify' ?
               <p className='fw-bold m-0'>
                 {email}
-                <IconButton onClick={editEmail}>
-                  <MdEdit size={15} color='var(--text-color)' />
-                </IconButton>
+                <Tooltip title="Edit Email" placement="right">
+                  <IconButton onClick={editEmail}>
+                    <MdEdit size={15} color='var(--text-color)' />
+                  </IconButton>
+                </Tooltip>
               </p> :
               null
           }
